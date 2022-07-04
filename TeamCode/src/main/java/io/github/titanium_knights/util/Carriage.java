@@ -13,12 +13,14 @@ import com.qualcomm.robotcore.hardware.Servo;
     public static double TRAPDOOR_DUMP_POS = .5; //NEED TO TEST
     public static double TRAPDOOR_IDLE_POS = 0; //NEED TO TEST
 
-    public static int ARM_SAFE_POSITION = 250; //TEST VALUE
+    public static int ARM_SAFE_POSITION = 150; //TEST VALUE
 
     public static double ARM_POWER = 0.5;
 
     public static double RAMP_OPEN = 0.1;
     public static double RAMP_CLOSE = 0.9;
+
+    public static int ARM_MAX = 900;
 
     public Carriage(HardwareMap hmap){
         arm = hmap.get(DcMotor.class, "carriage");
@@ -42,6 +44,11 @@ import com.qualcomm.robotcore.hardware.Servo;
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         arm.setPower(ARM_POWER);
     }
+
+    public void setManualMode() {
+        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
     //setting position trapdoor and ramp
     public void setTrapdoorPos(double pos) {
         trapdoor.setPosition(pos);
@@ -49,5 +56,7 @@ import com.qualcomm.robotcore.hardware.Servo;
     public void setRampPos(double pos) {
         ramp.setPosition(pos);
     }
+
+
 
 }
