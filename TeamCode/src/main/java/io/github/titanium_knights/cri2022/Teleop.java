@@ -18,8 +18,9 @@ public class Teleop extends OpMode {
     ButtonToggler btnX; //used for capstone claw
     ButtonToggler btnB; //used for carriage trapdoor
 
-    int extension = Slides.MAX_POSITION;
-    int retraction = Slides.MIN_POSITION+500;
+    //slide variables
+    int slides_extension = Slides.MAX_POSITION;
+    int slides_retraction = Slides.MIN_POSITION+500;
 
     public static double DRIVE_SPEED = 0.5;
 
@@ -102,18 +103,22 @@ public class Teleop extends OpMode {
 
         //slides
         if(gamepad1.y){
-            slides.runToPosition(extension);
+            if (slides.getCurrentPosition() < slides.CARRIAGE_STUCK_THRESHOLD) {
+                carriage.setArmPosition(carriage.ARM_SAFE_POSITION); //move arm up
+            }
+            else {
+                slides.runToPosition(slides_extension);
+            }
         }
         else if(gamepad1.a){
-            slides.runToPosition(retraction);
+            slides.runToPosition(slides_retraction);
         }
 
         //carriage -- ramp
         if (slides.getCurrentPosition() < slides.RAMP_OPEN_THRESHOLD) {
             carriage.setRampPos(carriage.RAMP_OPEN);
 
-        }
-        else if (slides.getCurrentPosition() > slides.RAMP_CLOSE_THRESHOLD) {
+        } else if (slides.getCurrentPosition() > slides.RAMP_CLOSE_THRESHOLD) {
             carriage.setRampPos(carriage.RAMP_CLOSE);
         }
 

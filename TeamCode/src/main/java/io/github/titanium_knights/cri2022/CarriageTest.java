@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.acmerobotics.dashboard.config.Config;
 
-
 import io.github.titanium_knights.util.Carriage;
 
 @Config @TeleOp
@@ -22,7 +21,7 @@ public class CarriageTest extends OpMode {
 
     @Override
     public void init() {
-        carriage = new Carriage(hardwareMap);
+        carriage = new Carriage(hardwareMap); //unused for now
         arm = hardwareMap.get(DcMotor.class, "carriage");
         trapdoor = hardwareMap.get(Servo.class, "trapdoor");
     }
