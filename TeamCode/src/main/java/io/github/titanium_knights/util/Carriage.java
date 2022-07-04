@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.hardware.Servo;
     Servo trapdoor;
     Servo ramp;
 
-    public static double TRAPDOOR_DUMP_POS = 1; //NEED TO TEST
-    public static double TRAPDOOR_IDLE_POS = .5; //NEED TO TEST
+    public static double TRAPDOOR_DUMP_POS = .5; //NEED TO TEST
+    public static double TRAPDOOR_IDLE_POS = 0; //NEED TO TEST
 
     public static int ARM_SAFE_POSITION = 250; //TEST VALUE
 
