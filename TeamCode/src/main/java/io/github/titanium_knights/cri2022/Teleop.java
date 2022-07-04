@@ -17,6 +17,8 @@ public class Teleop extends OpMode {
     CapstoneMechanism capstone;
     Claw claw;
 
+    ButtonToggler btnX;
+
     int extension = Slides.MAX_POSITION;
     int retraction = Slides.MIN_POSITION+500;
 
@@ -32,6 +34,9 @@ public class Teleop extends OpMode {
         odometry = new OdometryRetraction(hardwareMap);
         capstone = new CapstoneMechanism(hardwareMap);
         claw = new Claw(hardwareMap);
+
+        btnX = new ButtonToggler();
+
         odometry.retract();
     }
 
@@ -76,15 +81,24 @@ public class Teleop extends OpMode {
             capstone.setManualPower(0);
         }
 
-        //capstone -- claw
-        if(gamepad1.x) {
-            if (claw.isGrabbed()) {
-                claw.release();
-            }
-            else {
-                claw.grab();
-            }
+        //capstone -- claw (using button toggler)
+        btnX.ifRelease(gamepad1.x);
+        btnX.update(gamepad1.x);
+        if(btnX.getMode()) {
+            claw.grab();
         }
+        else{
+            claw.release();
+        }
+
+//        if(gamepad1.x) {
+//            if (claw.isGrabbed()) {
+//                claw.release();
+//            }
+//            else {
+//                claw.grab();
+//            }
+//        }
 
         //slides
         if(gamepad1.y){

@@ -1,7 +1,6 @@
 package io.github.titanium_knights.util;
 
 public class ButtonToggler {
-
     private boolean on;
     private boolean mode;
     private double duration;
@@ -25,7 +24,6 @@ public class ButtonToggler {
             mode = !mode;
             return true;
         }
-
         return false;
     }
 
