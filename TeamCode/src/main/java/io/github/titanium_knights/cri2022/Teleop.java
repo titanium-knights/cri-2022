@@ -1,7 +1,5 @@
 package io.github.titanium_knights.cri2022;
-
 import android.widget.ToggleButton;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import io.github.titanium_knights.util.*;
@@ -130,7 +128,7 @@ public class Teleop extends OpMode {
             carriage.setArmPower(0);
         }
 
-        //carriage --trapdoor
+        //carriage --trapdoor (using button toggler)
         btnB.ifRelease(gamepad1.b);
         btnB.update(gamepad1.b);
         if(btnB.getMode()) {
