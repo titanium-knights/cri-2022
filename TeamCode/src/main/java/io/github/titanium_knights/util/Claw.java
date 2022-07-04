@@ -15,6 +15,15 @@ public class Claw {
         this.claw = hardwareMap.servo.get("claw"); //slide open and close
     }
 
+    public boolean isGrabbed() {
+        if (claw.getPosition()==grabPos) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public void grab() {
         claw.setPosition(grabPos);
     }
