@@ -4,6 +4,10 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import io.github.titanium_knights.util.*;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+
 @TeleOp
 public class Teleop extends OpMode {
     MecanumDrive drive;
@@ -89,47 +93,58 @@ public class Teleop extends OpMode {
             claw.release();
         }
 
+        telemetry.addData("carriage val", carriage.getArmPosition());
+
         //slides
         if(gamepad1.y){
-            if (carriage.getArmPosition() < carriage.ARM_SAFE_POSITION && slides.getCurrentPosition() < slides.CARRIAGE_STUCK_THRESHOLD) {
-                carriage.setArmPosition(carriage.ARM_SAFE_POSITION); //move arm up
+            if ((carriage.getArmPosition() < Carriage.ARM_SAFE_POSITION) && (slides.getCurrentPosition() < Slides.CARRIAGE_STUCK_THRESHOLD)) {
+                carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm up
             }
             else {
                 slides.runToPosition(slides_extension);
             }
         }
         else if(gamepad1.a){
+            if ((slides.getCurrentPosition() > Slides.MAX_POSITION-500) && (carriage.getArmPosition() > Carriage.ARM_SAFE_POSITION)) {
+                carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm down before retracts
+            }
+            else {
+                slides.runToPosition(slides_extension);
+            }
             slides.runToPosition(slides_retraction);
+
         }
 
         //carriage -- ramp
-        if (slides.getCurrentPosition() < slides.RAMP_OPEN_THRESHOLD) {
-            carriage.setRampPos(carriage.RAMP_OPEN);
-
-        } else if (slides.getCurrentPosition() > slides.RAMP_CLOSE_THRESHOLD) {
-            carriage.setRampPos(carriage.RAMP_CLOSE);
+        if (gamepad1.dpad_left) {
+            carriage.setRampPos(Carriage.RAMP_OPEN);
+        }
+        else if (gamepad1.dpad_right) {
+            carriage.setRampPos(Carriage.RAMP_CLOSE);
         }
 
         //carriage --arm
-        if (Math.abs(gamepad1.right_trigger) > 0.1) {
-            carriage.setArmPower(gamepad1.right_trigger);
-        }
-        else if (Math.abs(gamepad1.left_trigger) > 0.1) {
-            carriage.setArmPower(-gamepad1.left_trigger);
-        }
-        else {
-            carriage.setArmPower(0);
+        if (slides.getCurrentPosition() > Slides.CARRIAGE_STUCK_THRESHOLD) {
+            if (Math.abs(gamepad1.right_trigger) > 0.1 && carriage.getArmPosition() < Carriage.ARM_MAX) {
+                carriage.setManualMode();
+                carriage.setArmPower(gamepad1.right_trigger);
+            } else if (Math.abs(gamepad1.left_trigger) > 0.1) {
+                carriage.setManualMode();
+                carriage.setArmPower(-gamepad1.left_trigger);
+            } else {
+                carriage.setArmPower(0);
+            }
         }
 
         //carriage --trapdoor (using button toggler)
         btnB.ifRelease(gamepad1.b);
         btnB.update(gamepad1.b);
         if(btnB.getMode()) {
-            carriage.setTrapdoorPos(carriage.TRAPDOOR_DUMP_POS);
+            carriage.setTrapdoorPos(Carriage.TRAPDOOR_DUMP_POS);
             telemetry.addData("trapdoor open?", true);
         }
         else{
-            carriage.setTrapdoorPos(carriage.TRAPDOOR_IDLE_POS);
+            carriage.setTrapdoorPos(Carriage.TRAPDOOR_IDLE_POS);
             telemetry.addData("trapdoor open?", false);
         }
         telemetry.update();
