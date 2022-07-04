@@ -75,9 +75,6 @@ public class Teleop extends OpMode {
         else if(gamepad1.dpad_down) {
             capstone.setPosition(CapstoneMechanism.pickup);
         }
-        else if(gamepad1.right_bumper) {
-            capstone.setManualPower(-.5);
-        }
         else{
             capstone.setManualPower(0);
         }
@@ -142,17 +139,6 @@ public class Teleop extends OpMode {
         else{
             carriage.setTrapdoorPos(carriage.TRAPDOOR_IDLE_POS);
         }
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }
