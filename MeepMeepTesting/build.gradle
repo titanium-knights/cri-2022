@@ -1,0 +1,13 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    maven { url = 'https://maven.brott.dev/' }
+    maven { url = 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.NoahBres:MeepMeep:2.0.0'
+    implementation project(':Shared')
+}

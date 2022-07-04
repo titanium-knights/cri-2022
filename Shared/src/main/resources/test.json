@@ -1,0 +1,16 @@
+{
+  "start": {
+    "x": 0,
+    "y": 0,
+    "heading": 0
+  },
+  "steps": [
+    {
+      "type": "lineConstant",
+      "pos": {
+        "x": 0,
+        "y": 10
+      }
+    }
+  ]
+}

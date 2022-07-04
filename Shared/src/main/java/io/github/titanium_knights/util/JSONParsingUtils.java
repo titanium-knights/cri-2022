@@ -8,7 +8,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class JSONParsingUtils {
     private JSONParsingUtils() {}
@@ -93,5 +99,22 @@ public class JSONParsingUtils {
         }
 
         return builder.build();
+    }
+
+    public static String stringFromResource(String name) {
+        try {
+            InputStream stream = JSONParsingUtils.class.getResourceAsStream(name);
+            assert stream != null;
+            InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
+            BufferedReader bufferedReader = new BufferedReader(reader);
+            String result = bufferedReader.lines().collect(Collectors.joining("\n"));
+            bufferedReader.close();
+            reader.close();
+            stream.close();
+
+            return result;
+        } catch (IOException e) {
+            throw new RuntimeException(String.format("Could not read %s: %s", name, e.getMessage()));
+        }
     }
 }

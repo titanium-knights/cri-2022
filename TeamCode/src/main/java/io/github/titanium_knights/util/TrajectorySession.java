@@ -2,6 +2,7 @@ package io.github.titanium_knights.util;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import io.github.titanium_knights.roadrunner.drive.SampleMecanumDrive;
 import io.github.titanium_knights.roadrunner.trajectorysequence.TrajectorySequence;
 import io.github.titanium_knights.roadrunner.trajectorysequence.TrajectorySequenceBuilder;
@@ -132,56 +133,69 @@ public class TrajectorySession {
         }
     }
 
-    public void update() {
+    public boolean update() {
         drive.update();
         if (currentIndex != null) {
+            if (currentIndex >= states.size()) return false;
             states.get(currentIndex).update(this, resumeFunction);
         }
+
+        return true;
     }
 
-    public static TrajectorySession buildFromJSON(SampleMecanumDrive drive, String json) throws JSONException {
-        JSONObject root = new JSONObject(json);
-        Pose2d start = parsePose(root.getJSONObject("start"));
-        JSONArray steps = root.getJSONArray("steps");
-        TrajectorySequenceBuilder builder = null;
-        TrajectorySession session = new TrajectorySession();
+    public void run(LinearOpMode opMode) {
+        start();
+        //noinspection StatementWithEmptyBody
+        while (opMode.opModeIsActive() && update()) {}
+    }
 
-        for (int i = 0; i < steps.length(); i++) {
-            JSONObject step = steps.getJSONObject(i);
-            String type = step.getString("type");
-            if (type.equals("interrupt")) {
-                if (builder != null) {
-                    TrajectorySequence sequence = builder.build();
-                    session.addState(new TrajectorySequenceState(sequence));
-                    start = sequence.end();
-                    builder = null;
+    public static TrajectorySession buildFromJSON(SampleMecanumDrive drive, String json) {
+        try {
+            JSONObject root = new JSONObject(json);
+            Pose2d start = parsePose(root.getJSONObject("start"));
+            JSONArray steps = root.getJSONArray("steps");
+            TrajectorySequenceBuilder builder = null;
+            TrajectorySession session = new TrajectorySession();
+
+            for (int i = 0; i < steps.length(); i++) {
+                JSONObject step = steps.getJSONObject(i);
+                String type = step.getString("type");
+                if (type.equals("interrupt")) {
+                    if (builder != null) {
+                        TrajectorySequence sequence = builder.build();
+                        session.addState(new TrajectorySequenceState(sequence));
+                        start = sequence.end();
+                        builder = null;
+                    }
+                    session.addState(new InterruptingCallbackState(step.getString("name")));
+                    if (step.has("pos")) {
+                        start = parsePose(step.getJSONObject("pos"));
+                    }
+                    continue;
                 }
-                session.addState(new InterruptingCallbackState(step.getString("name")));
-                if (step.has("pos")) {
-                    start = parsePose(step.getJSONObject("pos"));
+
+                if (builder == null) {
+                    builder = drive.trajectorySequenceBuilder(start);
                 }
-                continue;
+
+                if (type.equals("marker")) {
+                    String name = step.getString("callback");
+                    builder = builder.addTemporalMarker(() -> {
+                        session.dispatchCallback(name);
+                    });
+                    continue;
+                }
+
+                builder = addStepToTrajectory(builder, step);
             }
 
-            if (builder == null) {
-                builder = drive.trajectorySequenceBuilder(start);
+            if (builder != null) {
+                session.addState(new TrajectorySequenceState(builder.build()));
             }
 
-            if (type.equals("marker")) {
-                String name = step.getString("callback");
-                builder = builder.addTemporalMarker(() -> {
-                    session.dispatchCallback(name);
-                });
-                continue;
-            }
-
-            builder = addStepToTrajectory(builder, step);
+            return session;
+        } catch (JSONException e) {
+            throw new RuntimeException(String.format("Unable to parse path: %s", e.getMessage()));
         }
-
-        if (builder != null) {
-            session.addState(new TrajectorySequenceState(builder.build()));
-        }
-
-        return session;
     }
 }
