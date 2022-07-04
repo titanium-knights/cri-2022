@@ -23,6 +23,7 @@ public class GenericMotorTest extends OpMode {
 
     @Override
     public void loop() {
+        telemetry.addData("motor", MOTOR_NAME);
         motor.setPower(gamepad1.left_stick_y);
         telemetry.addData("Motor Encoder Val", motor.getCurrentPosition());
         telemetry.update();
