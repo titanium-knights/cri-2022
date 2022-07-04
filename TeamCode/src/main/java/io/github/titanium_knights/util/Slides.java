@@ -18,7 +18,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
     public static double IDLE_POWER_RTP = 0;
     public static boolean USE_ENCODER = false;
 
-    public static int CARRIAGE_STUCK_THRESHOLD = 0; //TEST VALUE
+    public static int CARRIAGE_STUCK_THRESHOLD = 200; //TEST VALUE
 
     //closing ramp encoder values -- HAVE TO TEST
     public static int RAMP_OPEN_THRESHOLD = 0;

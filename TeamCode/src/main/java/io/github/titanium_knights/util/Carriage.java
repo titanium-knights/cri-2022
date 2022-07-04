@@ -31,9 +31,11 @@ import com.qualcomm.robotcore.hardware.Servo;
     public void setArmPower(double pwr){
         arm.setPower(pwr);
     }
+
     public int getArmPosition(){
         return arm.getCurrentPosition();
     }
+
     public void setArmPosition(int pos){
         arm.setTargetPosition(pos);
         arm.setPower(ARM_POWER);
