@@ -10,8 +10,9 @@ import org.jetbrains.annotations.NotNull;
 @Config public class CapstoneMechanism{
     DcMotor motor;
     public static double power = 0.8;
-    public static int idle = 1020; //front pickup
-    public static int pickup = -832; //back limit
+    public static int idle = 0; //idle position
+    public static int pickup = -1392; //picking up capstone from floor
+    public static int capping = -195; //"dumping" capstone
 
     public CapstoneMechanism(HardwareMap hardwareMap, boolean resetEncoders){
         motor = hardwareMap.dcMotor.get("capstone");
@@ -41,6 +42,7 @@ import org.jetbrains.annotations.NotNull;
         return idle;
     }
     public static int getPickup() { return pickup; }
+
 
 
 }
