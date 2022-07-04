@@ -10,9 +10,10 @@ import com.qualcomm.robotcore.hardware.Servo;
     Servo trapdoor;
     Servo ramp;
 
-    public static int DUMP_POS = -192;
-    public static int IDLE_POS = -5;
-    public static double CARRIAGE_POWER = 0.5;
+    public static double TRAPDOOR_DUMP_POS = 1; //NEED TO TEST
+    public static double TRAPDOOR_IDLE_POS = .5; //NEED TO TEST
+
+    public static double ARM_POWER = 0.5;
 
     public static double RAMP_OPEN = 0;
     public static double RAMP_CLOSE = 0;
@@ -23,28 +24,19 @@ import com.qualcomm.robotcore.hardware.Servo;
         ramp = hmap.get(Servo.class, "ramp");
         trapdoor = hmap.get(Servo.class, "trapdoor");
     }
+
+    //arm
     public void setArmPower(double pwr){
         arm.setPower(pwr);
     }
-    public int getPosition(){
+    public int getArmPosition(){
         return arm.getCurrentPosition();
     }
-
-    public void setPosition(int pos){
+    public void setArmPosition(int pos){
         arm.setTargetPosition(pos);
-        arm.setPower(CARRIAGE_POWER);
+        arm.setPower(ARM_POWER);
     }
-//    public void dump(){
-//        this.setPosition(DUMP_POS);
-//    }
-//    public void idle(){
-//        this.setPosition(IDLE_POS);
-//    }
-//    public boolean isBusy() {
-//        return arm.isBusy();
-//    }
-
-    //new code
+    //setting position trapdoor and ramp
     public void setTrapdoorPos(double pos) {
         trapdoor.setPosition(pos);
     }
