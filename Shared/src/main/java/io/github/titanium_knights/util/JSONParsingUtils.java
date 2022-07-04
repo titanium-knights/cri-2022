@@ -60,6 +60,9 @@ public class JSONParsingUtils {
             case "turn":
                 builder = builder.turn(Math.toRadians(step.getDouble("angle")));
                 break;
+            case "wait":
+                builder = builder.waitSeconds(step.getDouble("seconds"));
+                break;
             default:
                 throw new IllegalArgumentException(String.format("Unknown step type: %s", type));
         }
@@ -77,7 +80,7 @@ public class JSONParsingUtils {
             JSONObject step = steps.getJSONObject(i);
             String type = step.getString("type");
             if (type.equals("interrupt")) {
-                String name = step.getString("name");
+                String name = step.getString("callback");
                 builder = builder.addTemporalMarker(() -> {
                     System.out.printf("Interrupting callback triggered: %s\n", name);
                 }).waitSeconds(0.1);

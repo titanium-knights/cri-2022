@@ -1,0 +1,387 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$defs": {
+        "pose": {
+            "type": "object",
+            "properties": {
+                "x": {
+                    "description": "The X position of the pose.",
+                    "type": "number"
+                },
+                "y": {
+                    "description": "The Y position of the pose.",
+                    "type": "number"
+                },
+                "heading": {
+                    "description": "The heading of the pose, in degrees.",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "x",
+                "y",
+                "heading"
+            ],
+            "default": {
+                "x": 0,
+                "y": 0,
+                "heading": 0
+            }
+        },
+        "vector": {
+            "type": "object",
+            "properties": {
+                "x": {
+                    "description": "The X position of the vector.",
+                    "type": "number"
+                },
+                "y": {
+                    "description": "The Y position of the vector.",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "x",
+                "y"
+            ],
+            "default": {
+                "x": 0,
+                "y": 0,
+                "heading": 0
+            }
+        },
+        "tangent": {
+            "description": "The angle of the end of the spline, in degrees.",
+            "type": "number",
+            "default": 0
+        }
+    },
+    "title": "Autonomous Route",
+    "description": "A sequence of trajectories for use in an FTC autonomous program",
+    "type": "object",
+    "properties": {
+        "start": {
+            "description": "The starting pose of the route.",
+            "$ref": "#/$defs/pose"
+        },
+        "steps": {
+            "type": "array",
+            "description": "A list of steps taken in the route.",
+            "items": {
+                "anyOf": [
+                    {
+                        "description": "A line where the heading is tangent.",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "lineTangent"
+                            },
+                            "pos": {
+                                "description": "The destination vector.",
+                                "$ref": "#/$defs/vector"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "pos"
+                        ]
+                    },
+                    {
+                        "description": "A line where the heading is constant.",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "lineConstant"
+                            },
+                            "pos": {
+                                "description": "The destination vector.",
+                                "$ref": "#/$defs/vector"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "pos"
+                        ]
+                    },
+                    {
+                        "description": "A line where the heading is interpolated linearly.",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "lineLinear"
+                            },
+                            "pos": {
+                                "description": "The destination pose.",
+                                "$ref": "#/$defs/pose"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "pos"
+                        ]
+                    },
+                    {
+                        "description": "A line where the heading is interpolated according to a spline.",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "lineSpline"
+                            },
+                            "pos": {
+                                "description": "The destination pose.",
+                                "$ref": "#/$defs/pose"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "pos"
+                        ]
+                    },
+                    {
+                        "description": "A spline where the heading is tangent.",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "splineTangent"
+                            },
+                            "pos": {
+                                "description": "The destination vector.",
+                                "$ref": "#/$defs/vector"
+                            },
+                            "tangent": {
+                                "$ref": "#/$defs/tangent"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "pos"
+                        ]
+                    },
+                    {
+                        "description": "A spline where the heading is constant.",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "splineConstant"
+                            },
+                            "pos": {
+                                "description": "The destination vector.",
+                                "$ref": "#/$defs/vector"
+                            },
+                            "tangent": {
+                                "$ref": "#/$defs/tangent"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "pos",
+                            "tangent"
+                        ]
+                    },
+                    {
+                        "description": "A spline where the heading is interpolated linearly.",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "splineLinear"
+                            },
+                            "pos": {
+                                "description": "The destination pose.",
+                                "$ref": "#/$defs/pose"
+                            },
+                            "tangent": {
+                                "$ref": "#/$defs/tangent"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "pos",
+                            "tangent"
+                        ]
+                    },
+                    {
+                        "description": "A spline where the heading is interpolated according to a spline.",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "splineSpline"
+                            },
+                            "pos": {
+                                "description": "The destination pose.",
+                                "$ref": "#/$defs/pose"
+                            },
+                            "tangent": {
+                                "$ref": "#/$defs/tangent"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "pos",
+                            "tangent"
+                        ]
+                    },
+                    {
+                        "description": "Manually set the tangent angle of the next spline.",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "setTangent"
+                            },
+                            "tangent": {
+                                "description": "Starting angle of the next spline, in degrees.",
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "tangent"
+                        ]
+                    },
+                    {
+                        "description": "A turn by a specified amount.",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "turn"
+                            },
+                            "angle": {
+                                "description": "Relative angle to turn by, in degrees.",
+                                "type": "number"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "angle"
+                        ]
+                    },
+                    {
+                        "description": "A delay by a specified number of seconds.",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "wait"
+                            },
+                            "seconds": {
+                                "description": "Seconds to wait for.",
+                                "type": "number",
+                                "minimum": 0
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "seconds"
+                        ]
+                    },
+                    {
+                        "description": "Trigger a marker.",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "marker"
+                            },
+                            "callback": {
+                                "description": "Name of a callback registered with TrajectorySession.registerCallback().",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "callback"
+                        ]
+                    },
+                    {
+                        "description": "Trigger an interrupting callback (one that stops the route.)",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "const": "interrupt"
+                            },
+                            "callback": {
+                                "description": "Name of a callback registered with TrajectorySession.registerInterruptingCallback().",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "callback"
+                        ]
+                    }
+                ],
+                "defaultSnippets": [
+                    {
+                        "label": "Line to point (tangent)",
+                        "body": {
+                            "type": "lineTangent",
+                            "pos": {"x": "^$1", "y": "^$2"}
+                        }
+                    },
+                    {
+                        "label": "Line to point (constant)",
+                        "body": {
+                            "type": "lineConstant",
+                            "pos": {"x": "^$1", "y": "^$2"}
+                        }
+                    },
+                    {
+                        "label": "Line to point (linear)",
+                        "body": {
+                            "type": "lineLinear",
+                            "pos": {"x": "^$1", "y": "^$2", "heading": "^$3"}
+                        }
+                    },
+                    {
+                        "label": "Line to point (spline)",
+                        "body": {
+                            "type": "lineSpline",
+                            "pos": {"x": "^$1", "y": "^$2", "heading": "^$3"}
+                        }
+                    },
+                    {
+                        "label": "Spline to point (tangent)",
+                        "body": {
+                            "type": "splineLinear",
+                            "pos": {"x": "^$1", "y": "^$2"},
+                            "tangent": "^$3"
+                        }
+                    },
+                    {
+                        "label": "Spline to point (constant)",
+                        "body": {
+                            "type": "splineConstant",
+                            "pos": {"x": "^$1", "y": "^$2"},
+                            "tangent": "^$3"
+                        }
+                    },
+                    {
+                        "label": "Spline to point (linear)",
+                        "body": {
+                            "type": "splineLinear",
+                            "pos": {
+                                "x": "^$1",
+                                "y": "^$2",
+                                "heading": "^$3"
+                            },
+                            "tangent": "^$4"
+                        }
+                    },
+                    {
+                        "label": "Spline to point (spline)",
+                        "body": {
+                            "type": "splineSpline",
+                            "pos": {
+                                "x": "^$1",
+                                "y": "^$2",
+                                "heading": "^$3"
+                            },
+                            "tangent": "^$4"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "required": [
+        "start",
+        "steps"
+    ]
+}
