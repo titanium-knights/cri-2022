@@ -136,10 +136,12 @@ public class Teleop extends OpMode {
         btnB.update(gamepad1.b);
         if(btnB.getMode()) {
             carriage.setTrapdoorPos(carriage.TRAPDOOR_DUMP_POS);
+            telemetry.addData("trapdoor open?", true);
         }
         else{
             carriage.setTrapdoorPos(carriage.TRAPDOOR_IDLE_POS);
+            telemetry.addData("trapdoor open?", false);
         }
-
+        telemetry.update();
     }
 }
