@@ -89,17 +89,7 @@ public class Teleop extends OpMode {
             claw.release();
         }
 
-//        if(gamepad1.x) {
-//            if (claw.isGrabbed()) {
-//                claw.release();
-//            }
-//            else {
-//                claw.grab();
-//            }
-//        }
-
         //slides
-
         if(gamepad1.y){
             if (carriage.getArmPosition() < carriage.ARM_SAFE_POSITION && slides.getCurrentPosition() < slides.CARRIAGE_STUCK_THRESHOLD) {
                 carriage.setArmPosition(carriage.ARM_SAFE_POSITION); //move arm up

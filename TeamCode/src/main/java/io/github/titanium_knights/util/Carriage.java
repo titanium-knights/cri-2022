@@ -17,8 +17,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 
     public static double ARM_POWER = 0.5;
 
-    public static double RAMP_OPEN = 0;
-    public static double RAMP_CLOSE = 0;
+    public static double RAMP_OPEN = 0.1;
+    public static double RAMP_CLOSE = 0.9;
 
     public Carriage(HardwareMap hmap){
         arm = hmap.get(DcMotor.class, "carriage");
@@ -44,10 +44,8 @@ import com.qualcomm.robotcore.hardware.Servo;
     public void setTrapdoorPos(double pos) {
         trapdoor.setPosition(pos);
     }
-
     public void setRampPos(double pos) {
         ramp.setPosition(pos);
     }
-
 
 }
