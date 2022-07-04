@@ -99,8 +99,9 @@ public class Teleop extends OpMode {
 //        }
 
         //slides
+
         if(gamepad1.y){
-            if (slides.getCurrentPosition() < slides.CARRIAGE_STUCK_THRESHOLD) {
+            if (carriage.getArmPosition() < carriage.ARM_SAFE_POSITION && slides.getCurrentPosition() < slides.CARRIAGE_STUCK_THRESHOLD) {
                 carriage.setArmPosition(carriage.ARM_SAFE_POSITION); //move arm up
             }
             else {
