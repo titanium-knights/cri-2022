@@ -23,6 +23,7 @@ import com.qualcomm.robotcore.hardware.Servo;
     public Carriage(HardwareMap hmap){
         arm = hmap.get(DcMotor.class, "carriage");
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         ramp = hmap.get(Servo.class, "ramp");
         trapdoor = hmap.get(Servo.class, "trapdoor");
     }
@@ -38,6 +39,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
     public void setArmPosition(int pos){
         arm.setTargetPosition(pos);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         arm.setPower(ARM_POWER);
     }
     //setting position trapdoor and ramp

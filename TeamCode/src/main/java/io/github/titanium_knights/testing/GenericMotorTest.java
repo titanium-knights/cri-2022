@@ -18,11 +18,12 @@ public class GenericMotorTest extends OpMode {
         motor = hardwareMap.get(DcMotor.class, MOTOR_NAME);
         motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         telemetry = new MultipleTelemetry(FtcDashboard.getInstance().getTelemetry(), telemetry);
+        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     @Override
     public void loop() {
-        motor.setPower(gamepad1.left_stick_y/2);
+        motor.setPower(gamepad1.left_stick_y);
         telemetry.addData("Motor Encoder Val", motor.getCurrentPosition());
         telemetry.update();
     }
