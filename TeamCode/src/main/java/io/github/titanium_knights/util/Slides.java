@@ -12,7 +12,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
 
     //slide positions
     public static int MIN_POSITION = 0;
-    public static int MAX_POSITION = 1950;
+    public static int MAX_POSITION = 1800;
 
     public static double IDLE_POWER = 0;
     public static double IDLE_POWER_RTP = 0;
