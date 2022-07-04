@@ -12,17 +12,13 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
 
     //slide positions
     public static int MIN_POSITION = 0;
-    public static int MAX_POSITION = 1700;
+    public static int MAX_POSITION = 400;
 
     public static double IDLE_POWER = 0;
     public static double IDLE_POWER_RTP = 0;
     public static boolean USE_ENCODER = false;
 
     public static int CARRIAGE_STUCK_THRESHOLD = 200; //TEST VALUE
-
-    //closing ramp encoder values -- HAVE TO TEST
-    public static int RAMP_OPEN_THRESHOLD = 0;
-    public static int RAMP_CLOSE_THRESHOLD = 0;
 
     public Slides(HardwareMap hardwareMap){
         motor = hardwareMap.dcMotor.get("slides");

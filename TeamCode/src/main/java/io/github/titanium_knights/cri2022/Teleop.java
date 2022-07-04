@@ -8,7 +8,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 
-@TeleOp
+@TeleOp @Config
 public class Teleop extends OpMode {
     MecanumDrive drive;
     Slides slides;
@@ -21,10 +21,6 @@ public class Teleop extends OpMode {
 
     ButtonToggler btnX; //used for capstone claw
     ButtonToggler btnB; //used for carriage trapdoor
-
-    //slide variables
-    int slides_extension = Slides.MAX_POSITION;
-    int slides_retraction = Slides.MIN_POSITION+500;
 
     public static double DRIVE_SPEED = 0.5;
 
@@ -94,6 +90,7 @@ public class Teleop extends OpMode {
         }
 
         telemetry.addData("carriage val", carriage.getArmPosition());
+        telemetry.addData("slides val", slides.getCurrentPosition());
 
         //slides
         if(gamepad1.y){
@@ -101,7 +98,7 @@ public class Teleop extends OpMode {
                 carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm up
             }
             else {
-                slides.runToPosition(slides_extension);
+                slides.runToPosition(Slides.MAX_POSITION);
             }
         }
         else if(gamepad1.a){
@@ -109,9 +106,9 @@ public class Teleop extends OpMode {
                 carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm down before retracts
             }
             else {
-                slides.runToPosition(slides_extension);
+                slides.runToPosition(Slides.MIN_POSITION+500);
             }
-            slides.runToPosition(slides_retraction);
+            slides.runToPosition(Slides.MIN_POSITION+500);
 
         }
 
