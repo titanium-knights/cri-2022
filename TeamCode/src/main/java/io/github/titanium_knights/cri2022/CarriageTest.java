@@ -15,15 +15,16 @@ public class CarriageTest extends OpMode {
     Servo trapdoor;
     Carriage carriage;
 
-    public static double TRAPDOOR_DUMP = 0.3;
+    public static double TRAPDOOR_DUMP = 0.3; //NEEDS TESTING
     public static double TRAPDOOR_START = 0;
 
-    boolean dumped = false;
+    boolean freight_dumped = false;
 
     @Override
     public void init() {
         carriage = new Carriage(hardwareMap);
         arm = hardwareMap.get(DcMotor.class, "carriage");
+        trapdoor = hardwareMap.get(Servo.class, "trapdoor");
     }
 
     @Override
@@ -38,16 +39,16 @@ public class CarriageTest extends OpMode {
         }
 
         //trapdoor toggle
-        if (gamepad1.b && dumped == false) {
-            carriage.setTrapdoorPos(TRAPDOOR_DUMP); //"dump" position
-            dumped = true;
+        if (gamepad1.b && !freight_dumped) {
+            trapdoor.setPosition(TRAPDOOR_DUMP); //"dump" position
+            freight_dumped = true;
         }
-        else if (gamepad1.b && dumped) {
-            carriage.setTrapdoorPos(TRAPDOOR_START);
-            dumped = false;
+        else if (gamepad1.b && freight_dumped) {
+            trapdoor.setPosition(TRAPDOOR_START);
+            freight_dumped = false;
         }
 
-        telemetry.addData("dumped", dumped);
+        telemetry.addData("dumped", freight_dumped);
         telemetry.update();
     }
 
