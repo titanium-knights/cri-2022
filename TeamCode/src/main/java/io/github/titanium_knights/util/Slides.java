@@ -10,12 +10,17 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
 @Config public class Slides {
     DcMotor motor;
 
+    //slide positions
     public static int MIN_POSITION = 0;
-    public static int MAX_POSITION = 1800;
+    public static int MAX_POSITION = 1950;
 
     public static double IDLE_POWER = 0;
     public static double IDLE_POWER_RTP = 0;
     public static boolean USE_ENCODER = false;
+
+    //closing ramp encoder values
+    public static int RAMP_OPEN_THRESHOLD = 0;
+    public static int RAMP_CLOSE_THRESHOLD = 0;
 
     public Slides(HardwareMap hardwareMap){
         motor = hardwareMap.dcMotor.get("slides");
