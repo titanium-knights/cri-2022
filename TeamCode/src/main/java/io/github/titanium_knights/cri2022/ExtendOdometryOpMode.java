@@ -12,6 +12,6 @@ public class ExtendOdometryOpMode extends LinearOpMode {
         OdometryRetraction retraction = new OdometryRetraction(hardwareMap);
         waitForStart();
         retraction.extend();
-        sleep(1000);
+        sleep(4000);
     }
 }
