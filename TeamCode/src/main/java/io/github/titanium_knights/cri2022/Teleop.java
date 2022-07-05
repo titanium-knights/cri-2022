@@ -131,6 +131,7 @@ public class Teleop extends OpMode {
                 carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm up
             }
             else {
+                carriage.setRampPos(Carriage.RAMP_CLOSE);
                 slides.runToPosition(Slides.MAX_POSITION);
             }
             if (Math.abs(slides.getCurrentPosition()-Slides.MAX_POSITION) < Slides.POSITION_BUFFER_HIGH) {
@@ -140,6 +141,7 @@ public class Teleop extends OpMode {
         }
 
         else if (slidesState == slidesState.MID) {
+            carriage.setRampPos(Carriage.RAMP_CLOSE);
             slides.runToPosition(Slides.MID_POSITION);
             if (Math.abs(slides.getCurrentPosition()-Slides.MID_POSITION-500) < Slides.POSITION_BUFFER_MID) {
                 slides.setPower(0);
@@ -148,6 +150,7 @@ public class Teleop extends OpMode {
         }
 
         else if (slidesState == slidesState.LOW) {
+            carriage.setRampPos(Carriage.RAMP_OPEN);
             if ((slides.getCurrentPosition() > Slides.MAX_POSITION-500) && (carriage.getArmPosition() > Carriage.ARM_SAFE_POSITION)) {
                 carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm down before retracts
             }
@@ -161,13 +164,13 @@ public class Teleop extends OpMode {
             }
         }
 
-        //carriage -- ramp
-        if (slides.getCurrentPosition() < slides.RAMP_MOVEMENT_THRESHOLD) {
-            carriage.setRampPos(carriage.RAMP_OPEN);
-        }
-        else if (slides.getCurrentPosition() > slides.RAMP_MOVEMENT_THRESHOLD) {
-            carriage.setRampPos(carriage.RAMP_CLOSE);
-        }
+//        //carriage -- ramp
+//        if (slides.getCurrentPosition() < slides.RAMP_MOVEMENT_THRESHOLD) {
+//            carriage.setRampPos(carriage.RAMP_OPEN);
+//        }
+//        else if (slides.getCurrentPosition() > slides.RAMP_MOVEMENT_THRESHOLD) {
+//            carriage.setRampPos(carriage.RAMP_CLOSE);
+//        }
 
         //carriage --arm
         if (slides.getCurrentPosition() > Slides.CARRIAGE_STUCK_THRESHOLD) {
