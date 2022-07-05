@@ -11,14 +11,16 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
     DcMotor motor;
 
     //slide positions
-    public static int MIN_POSITION = 0;
     public static int MAX_POSITION = 1400;
+    public static int MID_POSITION = 800; //MUST TEST THIS VALUE
+    public static int MIN_POSITION = 0;
 
     public static double IDLE_POWER = 0;
     public static double IDLE_POWER_RTP = 0;
     public static boolean USE_ENCODER = false;
 
     public static int POSITION_BUFFER_HIGH = 50;
+    public static int POSITION_BUFFER_MID = 15;
     public static int POSITION_BUFFER_LOW = 25;
 
     public static int CARRIAGE_STUCK_THRESHOLD = 200; //TEST VALUE

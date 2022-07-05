@@ -27,7 +27,7 @@ public class Teleop extends OpMode {
     ButtonToggler btnB; //used for carriage trapdoor
     SlideState slidesState;
 
-    public static double DRIVE_SPEED = 0.5;
+    public static double DRIVE_SPEED = 0.8;
 
     @Override
     public void init() {
@@ -99,33 +99,19 @@ public class Teleop extends OpMode {
         telemetry.addData("slides val", slides.getCurrentPosition());
 
         //slides
-//        if(gamepad1.y){
-//            if ((carriage.getArmPosition() < Carriage.ARM_SAFE_POSITION) && (slides.getCurrentPosition() < Slides.CARRIAGE_STUCK_THRESHOLD)) {
-//                carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm up
-//            }
-//            else {
-//                slides.runToPosition(Slides.MAX_POSITION);
-//            }
-//        }
-//        else if(gamepad1.a){
-//            if ((slides.getCurrentPosition() > Slides.MAX_POSITION-500) && (carriage.getArmPosition() > Carriage.ARM_SAFE_POSITION)) {
-//                carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm down before retracts
-//            }
-//            else {
-//                slides.runToPosition(Slides.MIN_POSITION+500);
-//            }
-//            slides.runToPosition(Slides.MIN_POSITION+500);
-//
-//        }
-
-        if (gamepad1.y) {
+        if (gamepad2.y) {
             slidesState = SlideState.HIGH;
         }
 
-        else if (gamepad1.a) {
+        else if (gamepad2.x) {
+            slidesState = SlideState.MID;
+        }
+
+        else if (gamepad2.a) {
             slidesState = SlideState.LOW;
         }
 
+        //slides doin things
         if (slidesState == SlideState.IDLE) {
             slides.setPower(0);
         }
@@ -138,6 +124,14 @@ public class Teleop extends OpMode {
                 slides.runToPosition(Slides.MAX_POSITION);
             }
             if (Math.abs(slides.getCurrentPosition()-Slides.MAX_POSITION) < Slides.POSITION_BUFFER_HIGH) {
+                slides.setPower(0);
+                slidesState = slidesState.IDLE;
+            }
+        }
+
+        else if (slidesState == slidesState.MID) {
+            slides.runToPosition(Slides.MID_POSITION);
+            if (Math.abs(slides.getCurrentPosition()-Slides.MID_POSITION-500) < Slides.POSITION_BUFFER_MID) {
                 slides.setPower(0);
                 slidesState = slidesState.IDLE;
             }
