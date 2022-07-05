@@ -185,8 +185,8 @@ public class Teleop extends OpMode {
         }
 
         //carriage --trapdoor (using button toggler)
-        btnB.ifRelease(gamepad1.b);
-        btnB.update(gamepad1.b);
+        btnB.ifRelease(gamepad2.b);
+        btnB.update(gamepad2.b);
         if(btnB.getMode()) {
             carriage.setTrapdoorPos(Carriage.TRAPDOOR_DUMP_POS);
             telemetry.addData("trapdoor open?", true);
