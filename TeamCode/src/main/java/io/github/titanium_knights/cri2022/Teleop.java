@@ -177,13 +177,15 @@ public class Teleop extends OpMode {
             if (Math.abs(gamepad2.right_stick_y) > 0.1 && carriage.getArmPosition() < Carriage.ARM_MAX) {
                 carriage.setManualMode();
                 carriage.setArmPower(gamepad2.right_stick_y);
-//            } else if (Math.abs(gamepad1.left_stick_x) > 0.1) {
+//            } else if (Math.abs(gamepad2.left_stick_x) > 0.1) {
 //                carriage.setManualMode();
-//                carriage.setArmPower(-gamepad1.left_trigger);
+//                carriage.setArmPower(-gamepad2.left_trigger);
             } else {
                 carriage.setArmPower(0);
             }
         }
+
+        else
 
         //carriage --trapdoor (using button toggler)
         btnB.ifRelease(gamepad2.b);

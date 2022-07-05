@@ -23,7 +23,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
     public static int POSITION_BUFFER_MID = 15;
     public static int POSITION_BUFFER_LOW = 25;
 
-    public static int CARRIAGE_STUCK_THRESHOLD = 200; //TEST VALUE
+    public static int CARRIAGE_STUCK_THRESHOLD = 80; //TEST VALUE
     public static int RAMP_MOVEMENT_THRESHOLD = 400;
 
     public Slides(HardwareMap hardwareMap){
