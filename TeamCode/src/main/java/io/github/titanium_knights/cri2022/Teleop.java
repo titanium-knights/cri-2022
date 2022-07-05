@@ -23,7 +23,8 @@ public class Teleop extends OpMode {
     OdometryRetraction odometry;
     CapstoneMechanism capstone;
     Claw claw;
-    ButtonToggler btnBack; //used for capstone claw
+    ButtonToggler btnBackG1; //used for capstone claw
+    ButtonToggler btnBackG2;
     ButtonToggler btnB; //used for carriage trapdoor
     SlideState slidesState;
 
@@ -40,7 +41,8 @@ public class Teleop extends OpMode {
         capstone = new CapstoneMechanism(hardwareMap);
         claw = new Claw(hardwareMap);
 
-        btnBack = new ButtonToggler();
+        btnBackG1 = new ButtonToggler();
+        btnBackG2 = new ButtonToggler();
         btnB = new ButtonToggler();
 
         odometry.retract();
@@ -64,10 +66,10 @@ public class Teleop extends OpMode {
         }
 
         //carousel
-        if(gamepad1.dpad_left) {
+        if(gamepad1.dpad_left || gamepad2.dpad_left) {
             carousel.spinReverse();
         }
-        else if(gamepad1.dpad_right){
+        else if(gamepad1.dpad_right || gamepad2.dpad_right){
             carousel.spin();
         }
         else{
@@ -75,10 +77,10 @@ public class Teleop extends OpMode {
         }
 
         //capstone
-        if(gamepad1.dpad_up) {
+        if(gamepad1.dpad_up || gamepad2.dpad_up) {
             capstone.setPosition(CapstoneMechanism.idle);
         }
-        else if(gamepad1.dpad_down) {
+        else if(gamepad1.dpad_down || gamepad2.dpad_down) {
             capstone.setPosition(CapstoneMechanism.pickup);
         }
         else{
@@ -86,9 +88,12 @@ public class Teleop extends OpMode {
         }
 
         //capstone -- claw (using button toggler)
-        btnBack.ifRelease(gamepad1.x);
-        btnBack.update(gamepad1.x);
-        if(btnBack.getMode()) {
+        btnBackG1.ifRelease(gamepad1.back);
+        btnBackG1.update(gamepad1.back);
+
+        btnBackG2.ifRelease(gamepad2.back);
+        btnBackG2.ifRelease(gamepad2.back);
+        if(btnBackG1.getMode() || btnBackG2.getMode()) {
             claw.grab();
         }
         else{
@@ -176,7 +181,7 @@ public class Teleop extends OpMode {
         if (slides.getCurrentPosition() > Slides.CARRIAGE_STUCK_THRESHOLD) {
             if (Math.abs(gamepad2.right_stick_y) > 0.1 && carriage.getArmPosition() < Carriage.ARM_MAX) {
                 carriage.setManualMode();
-                carriage.setArmPower(gamepad2.right_stick_y);
+                carriage.setArmPower(-gamepad2.right_stick_y);
 //            } else if (Math.abs(gamepad2.left_stick_x) > 0.1) {
 //                carriage.setManualMode();
 //                carriage.setArmPower(-gamepad2.left_trigger);
@@ -190,7 +195,7 @@ public class Teleop extends OpMode {
         //carriage --trapdoor (using button toggler)
         btnB.ifRelease(gamepad2.b);
         btnB.update(gamepad2.b);
-        if(btnBack.getMode()) {
+        if(btnB.getMode()) {
             carriage.setTrapdoorPos(Carriage.TRAPDOOR_DUMP_POS);
             telemetry.addData("trapdoor open?", true);
         }
