@@ -152,16 +152,14 @@ public class Teleop extends OpMode {
                 carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm down before retracts
             }
             else {
-                slides.runToPosition(Slides.MIN_POSITION+500);
+                slides.runToPosition(Slides.MIN_POSITION+150);
             }
 
-            if (Math.abs(slides.getCurrentPosition()-Slides.MIN_POSITION-500) < Slides.POSITION_BUFFER_LOW) {
+            if (Math.abs(slides.getCurrentPosition()-Slides.MIN_POSITION-150) < Slides.POSITION_BUFFER_LOW) {
                 slides.setPower(0);
                 slidesState = slidesState.IDLE;
             }
         }
-
-
 
         //carriage -- ramp
         if (slides.getCurrentPosition() < slides.RAMP_MOVEMENT_THRESHOLD) {
