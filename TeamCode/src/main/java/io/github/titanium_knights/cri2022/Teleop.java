@@ -113,7 +113,16 @@ public class Teleop extends OpMode {
 
         //slides preset code
         if (slidesState == SlideState.IDLE) {
-            slides.setPower(0);
+            //slides --manual
+            if (gamepad2.right_trigger > 0.1) {
+                slides.setPower(gamepad2.right_trigger);
+            }
+            else if (gamepad2.left_trigger > 0.1) {
+                slides.setPower(-gamepad2.left_trigger);
+            }
+            else{
+                slides.setPower(0);
+            }
         }
 
         else if (slidesState == slidesState.HIGH) {
@@ -151,16 +160,7 @@ public class Teleop extends OpMode {
             }
         }
 
-        //slides --manual
-        if (gamepad2.right_trigger > 0.1) {
-            slides.setPower(gamepad2.right_trigger);
-        }
-        else if (gamepad2.left_trigger > 0.1) {
-            slides.setPower(-gamepad2.left_trigger);
-        }
-        else{
-            slides.setPower(0);
-        }
+
 
         //carriage -- ramp
         if (gamepad1.dpad_left) {
