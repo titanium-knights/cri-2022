@@ -24,7 +24,7 @@ public class Teleop extends OpMode {
     CapstoneMechanism capstone;
     Claw claw;
     ButtonToggler btnX; //used for capstone claw
-    ButtonToggler btnB; //used for carriage trapdoor
+    ButtonToggler btnBack; //used for carriage trapdoor
     SlideState slidesState;
 
     public static double DRIVE_SPEED = 0.8;
@@ -41,7 +41,7 @@ public class Teleop extends OpMode {
         claw = new Claw(hardwareMap);
 
         btnX = new ButtonToggler();
-        btnB = new ButtonToggler();
+        btnBack = new ButtonToggler();
 
         odometry.retract();
         slidesState = SlideState.IDLE;
@@ -188,9 +188,9 @@ public class Teleop extends OpMode {
         else
 
         //carriage --trapdoor (using button toggler)
-        btnB.ifRelease(gamepad2.b);
-        btnB.update(gamepad2.b);
-        if(btnB.getMode()) {
+        btnBack.ifRelease(gamepad1.back);
+        btnBack.update(gamepad1.back);
+        if(btnBack.getMode()) {
             carriage.setTrapdoorPos(Carriage.TRAPDOOR_DUMP_POS);
             telemetry.addData("trapdoor open?", true);
         }
