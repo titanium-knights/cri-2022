@@ -44,7 +44,7 @@ public class Teleop extends OpMode {
         btnB = new ButtonToggler();
 
         odometry.retract();
-        slidesState = SlideState.LOW;
+        slidesState = SlideState.IDLE;
     }
 
     @Override
@@ -137,7 +137,7 @@ public class Teleop extends OpMode {
             else {
                 slides.runToPosition(Slides.MAX_POSITION);
             }
-            if (Math.abs(slides.getCurrentPosition()-Slides.MAX_POSITION) < 200) {
+            if (Math.abs(slides.getCurrentPosition()-Slides.MAX_POSITION) < Slides.POSITION_BUFFER) {
                 slides.setPower(0);
                 slidesState = slidesState.IDLE;
             }
@@ -151,7 +151,7 @@ public class Teleop extends OpMode {
                 slides.runToPosition(Slides.MIN_POSITION+500);
             }
 
-            if (Math.abs(slides.getCurrentPosition()-Slides.MIN_POSITION-500) < 200) {
+            if (Math.abs(slides.getCurrentPosition()-Slides.MIN_POSITION-500) < Slides.POSITION_BUFFER) {
                 slides.setPower(0);
                 slidesState = slidesState.IDLE;
             }
@@ -189,6 +189,8 @@ public class Teleop extends OpMode {
             carriage.setTrapdoorPos(Carriage.TRAPDOOR_IDLE_POS);
             telemetry.addData("trapdoor open?", false);
         }
+
+        telemetry.addData("slide state", slidesState);
         telemetry.update();
     }
 }
