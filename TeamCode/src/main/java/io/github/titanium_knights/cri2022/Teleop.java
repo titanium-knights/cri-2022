@@ -98,6 +98,7 @@ public class Teleop extends OpMode {
         telemetry.addData("carriage val", carriage.getArmPosition());
         telemetry.addData("slides val", slides.getCurrentPosition());
 
+        //slides -- using gamepad 2
         //slides --presets
         if (gamepad2.y) {
             slidesState = SlideState.HIGH;
