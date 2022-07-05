@@ -164,11 +164,11 @@ public class Teleop extends OpMode {
 
 
         //carriage -- ramp
-        if (gamepad1.dpad_left) {
-            carriage.setRampPos(Carriage.RAMP_OPEN);
+        if (slides.getCurrentPosition() < slides.RAMP_MOVEMENT_THRESHOLD) {
+            carriage.setRampPos(carriage.RAMP_OPEN);
         }
-        else if (gamepad1.dpad_right) {
-            carriage.setRampPos(Carriage.RAMP_CLOSE);
+        else if (slides.getCurrentPosition() > slides.RAMP_MOVEMENT_THRESHOLD) {
+            carriage.setRampPos(carriage.RAMP_CLOSE);
         }
 
         //carriage --arm
