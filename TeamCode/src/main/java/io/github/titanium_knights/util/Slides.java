@@ -12,7 +12,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
 
     //slide positions
     public static int MIN_POSITION = 0;
-    public static int MAX_POSITION = 400;
+    public static int MAX_POSITION = 1400;
 
     public static double IDLE_POWER = 0;
     public static double IDLE_POWER_RTP = 0;
@@ -45,17 +45,16 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
     public void runToPosition(int pos, double multiplier){
         int currentPos = motor.getCurrentPosition();
         //double multiplier = Math.min(1, Math.max(0, Math.abs(pos - currentPos) / 150.0));
-        if(pos - currentPos > 30){
+        if (pos - currentPos > 30) {
             setPower(1 * multiplier);
-        }
-        else if(pos - currentPos < -30){
+        } else if (pos - currentPos < -30) {
             setPower(-1 * multiplier);
-        }
-        else if (pos == 0) {
+        } else if (pos == 0) {
             setPower(0);
         } else {
             setPower(IDLE_POWER_RTP);
         }
+
     }
 
     public void runToPosition(int pos) {

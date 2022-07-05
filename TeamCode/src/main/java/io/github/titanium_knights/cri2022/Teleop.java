@@ -1,4 +1,5 @@
 package io.github.titanium_knights.cri2022;
+import android.widget.Button;
 import android.widget.ToggleButton;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -7,6 +8,10 @@ import io.github.titanium_knights.util.*;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+
+enum SlideState {
+    HIGH, MID, LOW, IDLE;
+}
 
 @TeleOp @Config
 public class Teleop extends OpMode {
@@ -18,9 +23,9 @@ public class Teleop extends OpMode {
     OdometryRetraction odometry;
     CapstoneMechanism capstone;
     Claw claw;
-
     ButtonToggler btnX; //used for capstone claw
     ButtonToggler btnB; //used for carriage trapdoor
+    SlideState slidesState;
 
     public static double DRIVE_SPEED = 0.5;
 
@@ -39,6 +44,7 @@ public class Teleop extends OpMode {
         btnB = new ButtonToggler();
 
         odometry.retract();
+        slidesState = SlideState.LOW;
     }
 
     @Override
@@ -93,23 +99,62 @@ public class Teleop extends OpMode {
         telemetry.addData("slides val", slides.getCurrentPosition());
 
         //slides
-        if(gamepad1.y){
+//        if(gamepad1.y){
+//            if ((carriage.getArmPosition() < Carriage.ARM_SAFE_POSITION) && (slides.getCurrentPosition() < Slides.CARRIAGE_STUCK_THRESHOLD)) {
+//                carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm up
+//            }
+//            else {
+//                slides.runToPosition(Slides.MAX_POSITION);
+//            }
+//        }
+//        else if(gamepad1.a){
+//            if ((slides.getCurrentPosition() > Slides.MAX_POSITION-500) && (carriage.getArmPosition() > Carriage.ARM_SAFE_POSITION)) {
+//                carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm down before retracts
+//            }
+//            else {
+//                slides.runToPosition(Slides.MIN_POSITION+500);
+//            }
+//            slides.runToPosition(Slides.MIN_POSITION+500);
+//
+//        }
+
+        if (gamepad1.y) {
+            slidesState = SlideState.HIGH;
+        }
+
+        else if (gamepad1.a) {
+            slidesState = SlideState.LOW;
+        }
+
+        if (slidesState == SlideState.IDLE) {
+            slides.setPower(0);
+        }
+
+        else if (slidesState == slidesState.HIGH) {
             if ((carriage.getArmPosition() < Carriage.ARM_SAFE_POSITION) && (slides.getCurrentPosition() < Slides.CARRIAGE_STUCK_THRESHOLD)) {
                 carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm up
             }
             else {
                 slides.runToPosition(Slides.MAX_POSITION);
             }
+            if (Math.abs(slides.getCurrentPosition()-Slides.MAX_POSITION) < 200) {
+                slides.setPower(0);
+                slidesState = slidesState.IDLE;
+            }
         }
-        else if(gamepad1.a){
+
+        else if (slidesState == slidesState.LOW) {
             if ((slides.getCurrentPosition() > Slides.MAX_POSITION-500) && (carriage.getArmPosition() > Carriage.ARM_SAFE_POSITION)) {
                 carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm down before retracts
             }
             else {
                 slides.runToPosition(Slides.MIN_POSITION+500);
             }
-            slides.runToPosition(Slides.MIN_POSITION+500);
 
+            if (Math.abs(slides.getCurrentPosition()-Slides.MIN_POSITION-500) < 200) {
+                slides.setPower(0);
+                slidesState = slidesState.IDLE;
+            }
         }
 
         //carriage -- ramp
