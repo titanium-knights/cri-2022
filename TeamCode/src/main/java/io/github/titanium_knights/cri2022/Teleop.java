@@ -137,7 +137,7 @@ public class Teleop extends OpMode {
             else {
                 slides.runToPosition(Slides.MAX_POSITION);
             }
-            if (Math.abs(slides.getCurrentPosition()-Slides.MAX_POSITION) < Slides.POSITION_BUFFER) {
+            if (Math.abs(slides.getCurrentPosition()-Slides.MAX_POSITION) < Slides.POSITION_BUFFER_HIGH) {
                 slides.setPower(0);
                 slidesState = slidesState.IDLE;
             }
@@ -151,7 +151,7 @@ public class Teleop extends OpMode {
                 slides.runToPosition(Slides.MIN_POSITION+500);
             }
 
-            if (Math.abs(slides.getCurrentPosition()-Slides.MIN_POSITION-500) < Slides.POSITION_BUFFER) {
+            if (Math.abs(slides.getCurrentPosition()-Slides.MIN_POSITION-500) < Slides.POSITION_BUFFER_LOW) {
                 slides.setPower(0);
                 slidesState = slidesState.IDLE;
             }
