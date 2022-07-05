@@ -173,12 +173,12 @@ public class Teleop extends OpMode {
 
         //carriage --arm
         if (slides.getCurrentPosition() > Slides.CARRIAGE_STUCK_THRESHOLD) {
-            if (Math.abs(gamepad1.right_trigger) > 0.1 && carriage.getArmPosition() < Carriage.ARM_MAX) {
+            if (Math.abs(gamepad2.right_stick_y) > 0.1 && carriage.getArmPosition() < Carriage.ARM_MAX) {
                 carriage.setManualMode();
-                carriage.setArmPower(gamepad1.right_trigger);
-            } else if (Math.abs(gamepad1.left_trigger) > 0.1) {
-                carriage.setManualMode();
-                carriage.setArmPower(-gamepad1.left_trigger);
+                carriage.setArmPower(gamepad2.right_stick_y);
+//            } else if (Math.abs(gamepad1.left_stick_x) > 0.1) {
+//                carriage.setManualMode();
+//                carriage.setArmPower(-gamepad1.left_trigger);
             } else {
                 carriage.setArmPower(0);
             }
