@@ -144,6 +144,12 @@ public class TrajectorySession {
     }
 
     public void run(LinearOpMode opMode) {
+        if (drive == null) throw new IllegalStateException("Attempt to run trajectory session without a drive");
+        for (State state: states) {
+            if (state instanceof TrajectorySequenceState) {
+                drive.setPoseEstimate(((TrajectorySequenceState) state).trajectorySequence.start());
+            }
+        }
         start();
         //noinspection StatementWithEmptyBody
         while (opMode.opModeIsActive() && update()) {}

@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../../auton-schema.json",
+  "start": {
+    "x": -36,
+    "y": -66,
+    "heading": 180
+  },
+  "steps": [
+    {
+      "type": "lineLinear",
+      "pos": {
+        "x": -48,
+        "y": -60,
+        "heading": 150
+      }
+    },
+    {
+      "type": "marker",
+      "callback": "duckStart"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "duckStop"
+    },
+    {
+      "type": "setTangent",
+      "tangent": 0
+    },
+    {
+      "type": "marker",
+      "callback": "intakeStart"
+    },
+    {
+      "type": "splineLinear",
+      "pos": {
+        "x": -60,
+        "y": -12,
+        "heading": 90
+      },
+      "tangent": 90
+    },
+    {
+      "type": "marker",
+      "callback": "intakeStop"
+    },
+    {
+      "type": "setTangent",
+      "tangent": 270
+    },
+    {
+      "type": "splineLinear",
+      "pos": {
+        "x": -24,
+        "y": -28,
+        "heading": 270
+      },
+      "tangent": 90
+    }
+  ]
+}
