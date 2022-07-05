@@ -98,7 +98,7 @@ public class Teleop extends OpMode {
         telemetry.addData("carriage val", carriage.getArmPosition());
         telemetry.addData("slides val", slides.getCurrentPosition());
 
-        //slides
+        //slides --presets
         if (gamepad2.y) {
             slidesState = SlideState.HIGH;
         }
@@ -111,7 +111,7 @@ public class Teleop extends OpMode {
             slidesState = SlideState.LOW;
         }
 
-        //slides doin things
+        //slides preset code
         if (slidesState == SlideState.IDLE) {
             slides.setPower(0);
         }
@@ -149,6 +149,17 @@ public class Teleop extends OpMode {
                 slides.setPower(0);
                 slidesState = slidesState.IDLE;
             }
+        }
+
+        //slides --manual
+        if (gamepad2.right_trigger > 0.1) {
+            slides.setPower(gamepad2.right_trigger);
+        }
+        else if (gamepad2.left_trigger > 0.1) {
+            slides.setPower(-gamepad2.left_trigger);
+        }
+        else{
+            slides.setPower(0);
         }
 
         //carriage -- ramp
