@@ -142,7 +142,7 @@ public class Teleop extends OpMode {
         }
 
         else if (slidesState == slidesState.MID) {
-            if ((carriage.getArmPosition() < Carriage.ARM_SAFE_POSITION) && (slides.getCurrentPosition() < Slides.CARRIAGE_STUCK_THRESHOLD)) {
+            if ((carriage.getArmPosition() < Carriage.ARM_SAFE_POSITION) && ((slides.getCurrentPosition() < Slides.CARRIAGE_STUCK_THRESHOLD) || (slides.getCurrentPosition() > Slides.CARRIAGE_STUCK_THRESHOLD))) {
                 carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm up
             }
             else {
