@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.Servo;
     public static double TRAPDOOR_DUMP_POS = .5; //NEED TO TEST
     public static double TRAPDOOR_IDLE_POS = 0; //NEED TO TEST
 
-    public static int ARM_SAFE_POSITION = 150; //TEST VALUE
+    public static int ARM_SAFE_POSITION = 180; //TEST VALUE
 
     public static double ARM_POWER = 0.5;
 
