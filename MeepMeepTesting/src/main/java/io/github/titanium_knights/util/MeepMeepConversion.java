@@ -70,7 +70,7 @@ public class MeepMeepConversion {
                 meepMeep,
                 12,
                 18,
-                new Constraints(30.0, 30.0, Math.toRadians(60.0), Math.toRadians(60.0), 15.0),
+                new Constraints(52.48291908330528, 52.48291908330528, Math.toRadians(261.482587826087), Math.toRadians(261.482587826087), 11.5),
                 buildSequence
         );
     }
