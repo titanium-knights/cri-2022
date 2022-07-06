@@ -92,7 +92,7 @@ public class Teleop extends OpMode {
         btnBackG1.update(gamepad1.back);
 
         btnBackG2.ifRelease(gamepad2.back);
-        btnBackG2.ifRelease(gamepad2.back);
+        btnBackG2.update(gamepad2.back);
 
         if(btnBackG1.getMode() || btnBackG2.getMode()) {
             claw.grab();
@@ -190,6 +190,7 @@ public class Teleop extends OpMode {
         //carriage --trapdoor (using button toggler)
         btnB.ifRelease(gamepad2.b);
         btnB.update(gamepad2.b);
+
         if(btnB.getMode()) {
             carriage.setTrapdoorPos(Carriage.TRAPDOOR_DUMP_POS);
             telemetry.addData("trapdoor open?", true);
