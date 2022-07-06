@@ -185,7 +185,6 @@ public class Teleop extends OpMode {
             }
         }
 
-        else
 
         //carriage --trapdoor (using button toggler)
         btnB.ifRelease(gamepad2.b);
