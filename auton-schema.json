@@ -282,6 +282,16 @@
                             "callback": {
                                 "description": "Name of a callback registered with TrajectorySession.registerCallback().",
                                 "type": "string"
+                            },
+                            "timeOffset": {
+                                "description": "Seconds to wait before triggering the marker.",
+                                "type": "number",
+                                "minimum": 0
+                            },
+                            "displacementOffset": {
+                                "description": "Meters to wait before triggering the marker.",
+                                "type": "number",
+                                "minimum": 0
                             }
                         },
                         "required": [

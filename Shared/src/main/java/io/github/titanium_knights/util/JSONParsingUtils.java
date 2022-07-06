@@ -92,9 +92,20 @@ public class JSONParsingUtils {
 
             if (type.equals("marker")) {
                 String name = step.getString("callback");
-                builder = builder.addTemporalMarker(() -> {
-                    System.out.printf("Callback triggered: %s\n", name);
-                });
+                if (step.has("displacementOffset")) {
+                    builder = builder.UNSTABLE_addDisplacementMarkerOffset(step.getDouble("displacementOffset"), () -> {
+                        System.out.printf("Callback triggered: %s\n", name);
+                    });
+                } else if (step.has("timeOffset")) {
+                    builder = builder.UNSTABLE_addTemporalMarkerOffset(step.getDouble("timeOffset"), () -> {
+                        System.out.printf("Callback triggered: %s\n", name);
+                    });
+                } else {
+                    builder = builder.addTemporalMarker(() -> {
+                        System.out.printf("Callback triggered: %s\n", name);
+                    });
+                }
+
                 continue;
             }
 
