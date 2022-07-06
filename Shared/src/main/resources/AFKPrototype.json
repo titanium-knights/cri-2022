@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../auton-schema.json",
+  "start": {
+    "x": -36,
+    "y": -66,
+    "heading": 180
+  },
+  "steps": [
+    {
+      "type": "lineLinear",
+      "pos": {
+        "x": -12,
+        "y": -48,
+        "heading": 270
+      }
+    },
+    {
+      "type": "lineLinear",
+      "pos": {
+        "x": -38,
+        "y": -66,
+        "heading": 270
+      }
+    }
+  ]
+}
