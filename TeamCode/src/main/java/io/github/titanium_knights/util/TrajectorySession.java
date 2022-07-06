@@ -199,6 +199,7 @@ public class TrajectorySession {
                 session.addState(new TrajectorySequenceState(builder.build()));
             }
 
+            session.setDrive(drive);
             return session;
         } catch (JSONException e) {
             throw new RuntimeException(String.format("Unable to parse path: %s", e.getMessage()));

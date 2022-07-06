@@ -6,9 +6,9 @@ import io.github.titanium_knights.roadrunner.drive.SampleMecanumDrive;
 import io.github.titanium_knights.util.JSONParsingUtils;
 import io.github.titanium_knights.util.TrajectorySession;
 
-@Autonomous(name = "Near Warehouse Cycle (Prototype)")
-public class NearWarehouseCycle extends LinearOpMode {
-    public static String PATH = JSONParsingUtils.stringFromResource("/nearWarehousePrototype.json");
+@Autonomous(name = "AFK (Prototype)")
+public class AFK extends LinearOpMode {
+    public static String PATH = JSONParsingUtils.stringFromResource("/AFKPrototype.json");
 
     @Override
     public void runOpMode() throws InterruptedException {
