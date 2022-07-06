@@ -14,6 +14,8 @@ import com.qualcomm.robotcore.hardware.Servo;
     public static double TRAPDOOR_IDLE_POS = 0; //NEED TO TEST
 
     public static int ARM_SAFE_POSITION = 180; //TEST VALUE
+    public static int ARM_INTAKE_POSITION = 0;
+    public static int ARM_POSITION_BUFFER = 10;
 
     public static double ARM_POWER = 0.5;
 

@@ -35,4 +35,8 @@ public class ButtonToggler {
         return mode;
     }
 
+    public void setMode(boolean mode) {
+        this.mode = mode;
+    }
+
 }
