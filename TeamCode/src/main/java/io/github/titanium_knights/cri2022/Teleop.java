@@ -92,7 +92,7 @@ public class Teleop extends OpMode {
         btnBackG1.update(gamepad1.back);
 
         btnBackG2.ifRelease(gamepad2.back);
-        btnBackG2.ifRelease(gamepad2.back);
+        btnBackG2.update(gamepad2.back);
         if(btnBackG1.getMode() || btnBackG2.getMode()) {
             claw.grab();
         }
@@ -146,8 +146,13 @@ public class Teleop extends OpMode {
         }
 
         else if (slidesState == slidesState.MID) {
-            carriage.setRampPos(Carriage.RAMP_CLOSE);
-            slides.runToPosition(Slides.MID_POSITION);
+            if ((carriage.getArmPosition() < Carriage.ARM_SAFE_POSITION) && (slides.getCurrentPosition() < Slides.CARRIAGE_STUCK_THRESHOLD)) {
+                carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm up
+            }
+            else {
+                carriage.setRampPos(Carriage.RAMP_CLOSE);
+                slides.runToPosition(Slides.MID_POSITION);
+            }
             if (Math.abs(slides.getCurrentPosition()-Slides.MID_POSITION-500) < Slides.POSITION_BUFFER_MID) {
                 slides.setPower(0);
                 slidesState = slidesState.IDLE;
@@ -156,7 +161,7 @@ public class Teleop extends OpMode {
 
         else if (slidesState == slidesState.LOW) {
             carriage.setRampPos(Carriage.RAMP_OPEN);
-            if ((slides.getCurrentPosition() > Slides.MAX_POSITION-500) && (carriage.getArmPosition() > Carriage.ARM_SAFE_POSITION)) {
+            if ((slides.getCurrentPosition() > Slides.MAX_POSITION-500 || slides.getCurrentPosition() > Slides.MID_POSITION-500) && (carriage.getArmPosition() > Carriage.ARM_SAFE_POSITION)) {
                 carriage.setArmPosition(Carriage.ARM_SAFE_POSITION); //move arm down before retracts
             }
             else {
@@ -169,22 +174,11 @@ public class Teleop extends OpMode {
             }
         }
 
-//        //carriage -- ramp
-//        if (slides.getCurrentPosition() < slides.RAMP_MOVEMENT_THRESHOLD) {
-//            carriage.setRampPos(carriage.RAMP_OPEN);
-//        }
-//        else if (slides.getCurrentPosition() > slides.RAMP_MOVEMENT_THRESHOLD) {
-//            carriage.setRampPos(carriage.RAMP_CLOSE);
-//        }
-
         //carriage --arm
         if (slides.getCurrentPosition() > Slides.CARRIAGE_STUCK_THRESHOLD) {
             if (Math.abs(gamepad2.right_stick_y) > 0.1 && carriage.getArmPosition() < Carriage.ARM_MAX) {
                 carriage.setManualMode();
                 carriage.setArmPower(-gamepad2.right_stick_y);
-//            } else if (Math.abs(gamepad2.left_stick_x) > 0.1) {
-//                carriage.setManualMode();
-//                carriage.setArmPower(-gamepad2.left_trigger);
             } else {
                 carriage.setArmPower(0);
             }
