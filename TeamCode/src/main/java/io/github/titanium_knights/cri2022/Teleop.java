@@ -154,7 +154,7 @@ public class Teleop extends OpMode {
                 carriage.setRampPos(Carriage.RAMP_CLOSE);
                 slides.runToPosition(Slides.MID_POSITION);
             }
-            if (Math.abs(slides.getCurrentPosition()-Slides.MID_POSITION-500) < Slides.POSITION_BUFFER_MID) {
+            if (Math.abs(slides.getCurrentPosition()-Slides.MID_POSITION) < Slides.POSITION_BUFFER_MID) {
                 slides.setPower(0);
                 slidesState = slidesState.IDLE;
             }
