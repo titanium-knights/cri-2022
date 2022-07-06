@@ -1,4 +1,6 @@
 package io.github.titanium_knights.cri2022;
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import io.github.titanium_knights.util.*;
@@ -38,6 +40,7 @@ public class Teleop extends OpMode {
 
     @Override
     public void init() {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         drive = new MecanumDrive(hardwareMap);
         slides = new Slides(hardwareMap);
         carriage = new Carriage(hardwareMap);
@@ -125,7 +128,7 @@ public class Teleop extends OpMode {
         }
 
         if (gamepad2.left_trigger > 0.1 || gamepad2.right_trigger > 0.1) {
-            slidesState = SlideState.MANUAL_SAFING;
+            if (slidesState != SlideState.MANUAL) slidesState = SlideState.MANUAL_SAFING;
         }
 
         carriage.setRampPos(slidesState == SlideState.LOW_UNSAFE ? Carriage.RAMP_OPEN : Carriage.RAMP_CLOSE);
