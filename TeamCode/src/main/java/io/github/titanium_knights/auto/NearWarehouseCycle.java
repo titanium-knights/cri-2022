@@ -16,6 +16,15 @@ public class NearWarehouseCycle extends LinearOpMode {
         TrajectorySession session = TrajectorySession.buildFromJSON(drive, PATH);
         Slides slides = new Slides(hardwareMap);
         Carriage carriage = new Carriage(hardwareMap);
+        TubeIntake intake = new TubeIntake(hardwareMap);
+
+        session.registerCallback("startDuck", () -> {
+
+        });
+
+        session.registerCallback("stopDuck", () -> {
+
+        });
 
         session.registerCallback("startIntake", () -> {
 
