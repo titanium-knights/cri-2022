@@ -50,8 +50,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap
     }
 
     companion object {
-        var intakePower = -0.8
-        var outtakePower = 0.8
+        var intakePower = -1.0
+        var outtakePower = 1.0
     }
 
 }
