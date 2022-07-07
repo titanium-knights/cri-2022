@@ -63,6 +63,26 @@
         "x": -38,
         "y": -63
       }
+    },
+    {
+      "type": "wait",
+      "seconds": 12
+    },
+    {
+      "type": "lineLinear",
+      "pos": {
+        "x": 5,
+        "y": -64,
+        "heading": 0
+      }
+    },
+    {
+      "type": "lineLinear",
+      "pos": {
+        "x": 52,
+        "y": -64,
+        "heading": 0
+      }
     }
   ]
 }

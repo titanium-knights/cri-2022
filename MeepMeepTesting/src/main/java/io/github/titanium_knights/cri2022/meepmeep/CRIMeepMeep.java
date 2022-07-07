@@ -14,7 +14,7 @@ public class CRIMeepMeep {
     private CRIMeepMeep() {}
 
     public static MeepMeep create() {
-        return new MeepMeep(800)
+        return new MeepMeep(500)
                 .setDarkMode(true)
                 .setBackground(MeepMeep.Background.FIELD_FREIGHTFRENZY_ADI_DARK)
                 .setBackgroundAlpha(0.95f);
