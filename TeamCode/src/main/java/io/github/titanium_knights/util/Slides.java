@@ -25,6 +25,7 @@ import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.har
 
     public static int CARRIAGE_STUCK_THRESHOLD = 80; //TEST VALUE
     public static int RAMP_MOVEMENT_THRESHOLD = 400;
+    public static int CARRIAGE_MOVE_DOWN_POS = 200;
 
     public Slides(HardwareMap hardwareMap){
         motor = hardwareMap.dcMotor.get("slides");

@@ -13,14 +13,14 @@ enum SlideState {
     LOW_UNSAFE;
 
     boolean allowsManualCarriageMovement() {
-        return (this == HIGH || this == MID || this == MANUAL);
+        return (this == HIGH || this == MID || this == MANUAL || this == LOW_UNSAFE);
     }
 
     boolean isSafing() {
         return (this == HIGH_SAFING || this == MID_SAFING || this == MANUAL_SAFING);
     }
 
-    boolean shouldCloseRamp() {
+    boolean shouldOpenRamp() {
         return (this == LOW_RESETTING_CARRIAGE || this == LOW_MOVING || this == LOW_UNSAFE);
     }
 }
@@ -135,7 +135,7 @@ public class Teleop extends OpMode {
             if (slidesState != SlideState.MANUAL) slidesState = SlideState.MANUAL_SAFING;
         }
 
-        carriage.setRampPos(slidesState.shouldCloseRamp() ? Carriage.RAMP_CLOSE : Carriage.RAMP_OPEN);
+        carriage.setRampPos(slidesState.shouldOpenRamp() ? Carriage.RAMP_OPEN : Carriage.RAMP_CLOSE);
 
         if (slidesState == SlideState.HIGH) {
             slides.runToPosition(Slides.MAX_POSITION);
@@ -151,7 +151,7 @@ public class Teleop extends OpMode {
         } else if (slidesState == SlideState.LOW_MOVING) {
             slides.runToPosition(Slides.MIN_POSITION);
             btnB.setMode(false);
-            if (Math.abs(slides.getCurrentPosition() - Slides.MIN_POSITION) < Slides.POSITION_BUFFER_LOW) {
+            if (Math.abs(slides.getCurrentPosition() - Slides.CARRIAGE_MOVE_DOWN_POS) < Slides.POSITION_BUFFER_LOW) {
                 slidesState = SlideState.LOW_UNSAFE;
             }
         } else if (slidesState == SlideState.MANUAL) {
@@ -188,10 +188,11 @@ public class Teleop extends OpMode {
 
         //carriage --arm
         if (slidesState.allowsManualCarriageMovement() && slides.getCurrentPosition() > Slides.CARRIAGE_STUCK_THRESHOLD) {
-            if (Math.abs(gamepad2.right_stick_y) > 0.1 && carriage.getArmPosition() < Carriage.ARM_MAX) {
+            long max = (slides.getCurrentPosition() > Slides.CARRIAGE_STUCK_THRESHOLD) ? Carriage.ARM_MAX : Carriage.ARM_SAFE_POSITION;
+            if (Math.abs(gamepad2.right_stick_y) > 0.1 && carriage.getArmPosition() < max) {
                 carriage.setManualMode();
                 carriage.setArmPower(-gamepad2.right_stick_y);
-            } else {
+            } else if (carriage.isManualMode()) {
                 carriage.setArmPower(0);
             }
         }
