@@ -143,7 +143,7 @@ public class TrajectorySession {
         return true;
     }
 
-    public void run(LinearOpMode opMode) {
+    public void run(LinearOpMode opMode, Runnable onLoop) {
         if (drive == null) throw new IllegalStateException("Attempt to run trajectory session without a drive");
         for (State state: states) {
             if (state instanceof TrajectorySequenceState) {
@@ -151,8 +151,13 @@ public class TrajectorySession {
             }
         }
         start();
-        //noinspection StatementWithEmptyBody
-        while (opMode.opModeIsActive() && update()) {}
+        while (opMode.opModeIsActive() && update()) {
+            onLoop.run();
+        }
+    }
+
+    public void run(LinearOpMode opMode) {
+        run(opMode, () -> {});
     }
 
     public static TrajectorySession buildFromJSON(SampleMecanumDrive drive, String json) {

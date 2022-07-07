@@ -19,6 +19,10 @@ enum SlideState {
     boolean isSafing() {
         return (this == HIGH_SAFING || this == MID_SAFING || this == MANUAL_SAFING);
     }
+
+    boolean shouldCloseRamp() {
+        return (this == LOW_RESETTING_CARRIAGE || this == LOW_MOVING || this == LOW_UNSAFE);
+    }
 }
 
 @TeleOp @Config
@@ -131,7 +135,7 @@ public class Teleop extends OpMode {
             if (slidesState != SlideState.MANUAL) slidesState = SlideState.MANUAL_SAFING;
         }
 
-        carriage.setRampPos(slidesState == SlideState.LOW_UNSAFE ? Carriage.RAMP_OPEN : Carriage.RAMP_CLOSE);
+        carriage.setRampPos(slidesState.shouldCloseRamp() ? Carriage.RAMP_CLOSE : Carriage.RAMP_OPEN);
 
         if (slidesState == SlideState.HIGH) {
             slides.runToPosition(Slides.MAX_POSITION);
