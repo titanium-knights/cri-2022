@@ -1,7 +1,7 @@
 package io.github.titanium_knights.cri2022.meepmeep;
 
-public class AFKPrototype {
+public class AFKRed {
     public static void main(String[] args) {
-        CRIMeepMeep.create("/AFKPrototype.json").start();
+        CRIMeepMeep.create("/AFKRed.json").start();
     }
 }

@@ -74,15 +74,22 @@
       "pos": {
         "x": 5,
         "y": -64,
-        "heading": 0
+        "heading": -2.5
+      }
+    },
+    {
+      "type": "lineConstant",
+      "pos": {
+        "x": 5,
+        "y": -68
       }
     },
     {
       "type": "lineLinear",
       "pos": {
-        "x": 52,
-        "y": -64,
-        "heading": 0
+        "x": 50,
+        "y": -72,
+        "heading": -2.5
       }
     }
   ]

@@ -7,14 +7,16 @@ import io.github.titanium_knights.roadrunner.drive.SampleMecanumDrive;
 import io.github.titanium_knights.util.*;
 
 @Config
-@Autonomous(name = "AFK (Prototype)")
-public class AFK extends LinearOpMode {
-    public static String PATH = JSONParsingUtils.stringFromResource("/AFKPrototype.json");
+abstract class AFK extends LinearOpMode {
+    public static String RED_PATH = JSONParsingUtils.stringFromResource("/AFKRed.json");
+    public static String BLUE_PATH = JSONParsingUtils.stringFromResource("/AFKBlue.json");
     public static int ARM_END_POSITION = -50;
     public static int LEVEL = 0;
     public static int SLIDE_DUMP_POSITION_HIGH = 1594;
-    public static int SLIDE_DUMP_POSITION_MID = 1230;
+    public static int SLIDE_DUMP_POSITION_MID = 1240;
     public static int SLIDE_DUMP_POSITION_LOW = 1060;
+
+    abstract boolean isRed();
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -22,7 +24,7 @@ public class AFK extends LinearOpMode {
 
         OdometryRetraction odometryRetraction = new OdometryRetraction(hardwareMap);
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        TrajectorySession session = TrajectorySession.buildFromJSON(drive, PATH);
+        TrajectorySession session = TrajectorySession.buildFromJSON(drive, isRed() ? RED_PATH : BLUE_PATH);
         Carriage carriage = new Carriage(hardwareMap);
         Slides slides = new Slides(hardwareMap);
         odometryRetraction.extend();
