@@ -37,10 +37,12 @@ public class Teleop extends OpMode {
     Claw claw;
     ButtonToggler btnBackG1; //used for capstone claw
     ButtonToggler btnBackG2;
-    ButtonToggler btnB; //used for carriage trapdoor
+    ButtonToggler btnB; //used for carriage trapdoor (G1)
+    ButtonToggler btnX; //used for slowmode toggle (G1)
     SlideState slidesState;
 
     public static double DRIVE_SPEED = 0.8;
+    public static double DRIVE_SPEED_SLOW = 0.5;
 
     @Override
     public void init() {
@@ -57,6 +59,7 @@ public class Teleop extends OpMode {
         btnBackG1 = new ButtonToggler();
         btnBackG2 = new ButtonToggler();
         btnB = new ButtonToggler();
+        btnX = new ButtonToggler();
 
         odometry.retract();
         slidesState = SlideState.LOW_UNSAFE;
@@ -64,8 +67,17 @@ public class Teleop extends OpMode {
 
     @Override
     public void loop() {
-        //driving
-        drive.teleOpRobotCentric(gamepad1, DRIVE_SPEED);
+        btnX.ifRelease(gamepad1.x);
+        btnX.update(gamepad1.x);
+
+        //driving + slow mode
+        if (btnX.getMode()) {
+            drive.teleOpRobotCentric(gamepad1, DRIVE_SPEED_SLOW);
+        }
+
+        else {
+            drive.teleOpRobotCentric(gamepad1, DRIVE_SPEED);
+        }
 
         //intake
         if (gamepad1.right_bumper) {
