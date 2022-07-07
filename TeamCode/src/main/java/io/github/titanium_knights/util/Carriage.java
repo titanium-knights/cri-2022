@@ -20,7 +20,7 @@ import com.qualcomm.robotcore.hardware.Servo;
     public static double ARM_POWER = 0.5;
 
     public static double RAMP_OPEN = 0.4;
-    public static double RAMP_CLOSE = 0.9;
+    public static double RAMP_CLOSE = 0.8;
 
     public static int ARM_MAX = 900;
 

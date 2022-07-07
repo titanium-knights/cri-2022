@@ -1,34 +1,51 @@
 package io.github.titanium_knights.auto;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import io.github.titanium_knights.roadrunner.drive.SampleMecanumDrive;
 import io.github.titanium_knights.util.*;
 
-@Autonomous(name = "Near Warehouse Cycle (Prototype)")
-public class NearWarehouseCycle extends LinearOpMode {
-    public static String PATH = JSONParsingUtils.stringFromResource("/nearWarehousePrototype.json");
+@Config
+public abstract class NearWarehouseCycle extends LinearOpMode {
+    public static String RED_PATH = JSONParsingUtils.stringFromResource("/NearWarehouseRed.json");
+    public static String BLUE_PATH = JSONParsingUtils.stringFromResource("/NearWarehouseBlue.json");
+    public static int SLIDE_DUMP_POS = 800;
+
+    abstract boolean isRed();
 
     @Override
     public void runOpMode() throws InterruptedException {
         OdometryRetraction odometryRetraction = new OdometryRetraction(hardwareMap);
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        TrajectorySession session = TrajectorySession.buildFromJSON(drive, PATH);
+        TrajectorySession session = TrajectorySession.buildFromJSON(drive, isRed() ? RED_PATH : BLUE_PATH);
         Slides slides = new Slides(hardwareMap);
         Carriage carriage = new Carriage(hardwareMap);
         TubeIntake intake = new TubeIntake(hardwareMap);
         Carousel carousel = new Carousel(hardwareMap);
+        CapstoneMechanism capstone = new CapstoneMechanism(hardwareMap);
 
         session.registerCallback("startDuck", carousel::spin);
 
         session.registerCallback("stopDuck", carousel::stop);
 
-        session.registerCallback("startIntake", intake::spin);
+        session.registerCallback("startIntake", () -> {
+            intake.setPower(-0.75);
+            carriage.setRampPos(Carriage.RAMP_OPEN);
+        });
 
-        session.registerCallback("stopIntake", intake::stop);
+        session.registerCallback("reverseIntake", () -> {
+            intake.setPower(0.75);
+        });
+
+        session.registerCallback("stopIntake", () -> {
+            intake.stop();
+            carriage.setRampPos(Carriage.RAMP_CLOSE);
+        });
 
         session.registerCallback("extendSlides", () -> {
-            slides.runToPosition(Slides.MID_POSITION);
+            carriage.setArmPosition(Carriage.ARM_SAFE_POSITION);
+            slides.runToPosition(SLIDE_DUMP_POS);
         });
 
         session.registerCallback("raiseCarriage", () -> {
@@ -50,11 +67,17 @@ public class NearWarehouseCycle extends LinearOpMode {
 
         session.registerCallback("openRamp", () -> {
             carriage.setRampPos(Carriage.RAMP_OPEN);
-            carriage.setArmPosition(0);
+            carriage.setArmPosition(AFK.ARM_END_POSITION);
         });
 
+        carriage.setRampPos(Carriage.RAMP_CLOSE);
+        carriage.setArmPosition(Carriage.ARM_SAFE_POSITION);
+
         odometryRetraction.extend();
+
         waitForStart();
+        capstone.setPosition(CapstoneMechanism.autoStart);
+        sleep(1000);
         session.run(this);
     }
 }

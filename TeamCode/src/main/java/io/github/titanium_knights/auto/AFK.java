@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 abstract class AFK extends LinearOpMode {
     public static String RED_PATH = JSONParsingUtils.stringFromResource("/AFKRed.json");
     public static String BLUE_PATH = JSONParsingUtils.stringFromResource("/AFKBlue.json");
-    public static int ARM_END_POSITION = -50;
+    public static int ARM_END_POSITION = -60;
     public static int SLIDE_DUMP_POSITION_HIGH = 1594;
     public static int SLIDE_DUMP_POSITION_MID = 1240;
     public static int SLIDE_DUMP_POSITION_LOW = 1060;
@@ -29,6 +29,7 @@ abstract class AFK extends LinearOpMode {
         Carriage carriage = new Carriage(hardwareMap);
         Slides slides = new Slides(hardwareMap);
         CapstoneVision vision = new CapstoneVision(hardwareMap, telemetry);
+        CapstoneMechanism capstone = new CapstoneMechanism(hardwareMap);
         odometryRetraction.extend();
 
         carriage.setArmPosition(Carriage.ARM_SAFE_POSITION);
@@ -69,6 +70,8 @@ abstract class AFK extends LinearOpMode {
 
         waitForStart();
         LEVEL.set(vision.getPosition());
+        capstone.setPosition(CapstoneMechanism.autoStart);
+        sleep(1000);
         session.run(this);
     }
 }

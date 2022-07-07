@@ -1,0 +1,184 @@
+{
+  "$schema": "../../../../auton-schema.json",
+  "start": {
+    "x": -36,
+    "y": -66,
+    "heading": 180
+  },
+  "steps": [
+    {
+      "type": "lineLinear",
+      "pos": {
+        "x": -60,
+        "y": -60,
+        "heading": 150
+      }
+    },
+    {
+      "type": "marker",
+      "callback": "startDuck"
+    },
+    {
+      "type": "wait",
+      "seconds": 4
+    },
+    {
+      "type": "marker",
+      "callback": "stopDuck"
+    },
+    {
+      "type": "setTangent",
+      "tangent": 0
+    },
+
+    {
+      "type": "splineLinear",
+      "pos": {
+        "x": -30,
+        "y": -22,
+        "heading": 270
+      },
+      "tangent": 90
+    },
+    {
+      "type": "setTangent",
+      "tangent": 270
+    },
+    {
+      "type": "marker",
+      "callback": "extendSlides"
+    },
+    {
+      "type": "wait",
+      "seconds": 2
+    },
+    {
+      "type": "marker",
+      "callback": "raiseCarriage"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "openTrapdoor"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5
+    },
+    {
+      "type": "marker",
+      "callback": "lowerCarriage"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "retractSlides"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25
+    },
+    {
+      "type": "marker",
+      "callback": "openRamp"
+    },
+    {
+      "type": "splineTangent",
+      "pos": {
+        "x": -64,
+        "y": -15
+      },
+      "tangent": 90
+    },
+    {
+      "type": "marker",
+      "callback": "reverseIntake"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5
+    },
+    {
+      "type": "marker",
+      "callback": "startIntake"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5
+    },
+    {
+      "type": "marker",
+      "callback": "stopIntake"
+    },
+    {
+      "type": "setTangent",
+      "tangent": 270
+    },
+    {
+      "type": "splineTangent",
+      "pos": {
+        "x": -33,
+        "y": -22
+      },
+      "tangent": 90
+    },
+    {
+      "type": "marker",
+      "callback": "extendSlides"
+    },
+    {
+      "type": "wait",
+      "seconds": 2
+    },
+    {
+      "type": "marker",
+      "callback": "raiseCarriage"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "openTrapdoor"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5
+    },
+    {
+      "type": "marker",
+      "callback": "lowerCarriage"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "retractSlides"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.25
+    },
+    {
+      "type": "marker",
+      "callback": "openRamp"
+    },
+    {
+      "type": "splineTangent",
+      "pos": {
+        "x": -60,
+        "y": -24
+      },
+      "tangent": 90
+    }
+  ]
+}

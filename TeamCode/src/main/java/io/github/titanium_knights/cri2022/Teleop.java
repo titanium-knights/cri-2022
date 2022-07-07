@@ -165,6 +165,7 @@ public class Teleop extends OpMode {
             btnB.setMode(false);
             if (Math.abs(slides.getCurrentPosition() - Slides.CARRIAGE_MOVE_DOWN_POS) < Slides.POSITION_BUFFER_LOW) {
                 slidesState = SlideState.LOW_UNSAFE;
+                carriage.setArmPosition(Carriage.ARM_INTAKE_POSITION);
             }
         } else if (slidesState == SlideState.MANUAL) {
             if ((gamepad2.right_trigger > 0.1) && (slides.getCurrentPosition() < Slides.MAX_POSITION)) {
@@ -193,14 +194,16 @@ public class Teleop extends OpMode {
             }
         } else if (slidesState == SlideState.LOW_UNSAFE) {
             slides.runToPosition(Slides.MIN_POSITION);
-            carriage.setArmPosition(Carriage.ARM_INTAKE_POSITION);
+            if (!carriage.isManualMode()) {
+                carriage.setArmPosition(Carriage.ARM_INTAKE_POSITION);
+            }
         } else {
             throw new IllegalStateException("Unknown state!");
         }
 
         //carriage --arm
         if (slidesState.allowsManualCarriageMovement() && slides.getCurrentPosition() > Slides.CARRIAGE_STUCK_THRESHOLD) {
-            long max = (slides.getCurrentPosition() > Slides.CARRIAGE_STUCK_THRESHOLD) ? Carriage.ARM_MAX : Carriage.ARM_SAFE_POSITION;
+            long max = Carriage.ARM_MAX;
             if (Math.abs(gamepad2.right_stick_y) > 0.1 && carriage.getArmPosition() < max) {
                 carriage.setManualMode();
                 carriage.setArmPower(-gamepad2.right_stick_y);
