@@ -14,6 +14,50 @@
       }
     },
     {
+      "type": "marker",
+      "callback": "extendSlides"
+    },
+    {
+      "type": "wait",
+      "seconds": 2
+    },
+    {
+      "type": "marker",
+      "callback": "raiseCarriage"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "openTrapdoor"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "lowerCarriage"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "retractSlides"
+    },
+    {
+      "type": "wait",
+      "seconds": 2
+    },
+    {
+      "type": "marker",
+      "callback": "openRamp"
+    },
+    {
       "type": "lineConstant",
       "pos": {
         "x": -38,

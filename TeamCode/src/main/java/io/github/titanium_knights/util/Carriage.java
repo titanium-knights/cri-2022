@@ -47,6 +47,9 @@ import com.qualcomm.robotcore.hardware.Servo;
         arm.setPower(ARM_POWER);
     }
 
+    public boolean isManualMode() {
+        return arm.getMode() == DcMotor.RunMode.RUN_WITHOUT_ENCODER;
+    }
     public void setManualMode() {
         arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }

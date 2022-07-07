@@ -16,7 +16,7 @@
     },
     {
       "type": "marker",
-      "callback": "duckStart"
+      "callback": "startDuck"
     },
     {
       "type": "wait",
@@ -24,24 +24,81 @@
     },
     {
       "type": "marker",
-      "callback": "duckStop"
+      "callback": "stopDuck"
     },
     {
       "type": "setTangent",
       "tangent": 0
     },
-    {
-      "type": "marker",
-      "callback": "intakeStart"
-    },
+
     {
       "type": "splineLinear",
       "pos": {
-        "x": -60,
-        "y": -12,
-        "heading": 90
+        "x": -24,
+        "y": -28,
+        "heading": 270
       },
       "tangent": 90
+    },
+    {
+      "type": "setTangent",
+      "tangent": 270
+    },
+    {
+      "type": "marker",
+      "callback": "extendSlides"
+    },
+    {
+      "type": "wait",
+      "seconds": 2
+    },
+    {
+      "type": "marker",
+      "callback": "raiseCarriage"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "openTrapdoor"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "lowerCarriage"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "retractSlides"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.6
+    },
+    {
+      "type": "marker",
+      "callback": "openRamp"
+    },
+    {
+      "type": "splineTangent",
+      "pos": {
+        "x": -60,
+        "y": -12
+      },
+      "tangent": 90
+    },
+    {
+      "type": "marker",
+      "callback": "intakeStart"
     },
     {
       "type": "marker",
@@ -52,13 +109,56 @@
       "tangent": 270
     },
     {
-      "type": "splineLinear",
+      "type": "splineTangent",
       "pos": {
         "x": -24,
-        "y": -28,
-        "heading": 270
+        "y": -28
       },
       "tangent": 90
+    },
+    {
+      "type": "marker",
+      "callback": "extendSlides"
+    },
+    {
+      "type": "wait",
+      "seconds": 2
+    },
+    {
+      "type": "marker",
+      "callback": "raiseCarriage"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "openTrapdoor"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "lowerCarriage"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "retractSlides"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.6
+    },
+    {
+      "type": "marker",
+      "callback": "openRamp"
     }
   ]
 }
