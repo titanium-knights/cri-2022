@@ -17,25 +17,18 @@ public class NearWarehouseCycle extends LinearOpMode {
         Slides slides = new Slides(hardwareMap);
         Carriage carriage = new Carriage(hardwareMap);
         TubeIntake intake = new TubeIntake(hardwareMap);
+        Carousel carousel = new Carousel(hardwareMap);
 
-        session.registerCallback("startDuck", () -> {
+        session.registerCallback("startDuck", carousel::spin);
 
-        });
+        session.registerCallback("stopDuck", carousel::stop);
 
-        session.registerCallback("stopDuck", () -> {
+        session.registerCallback("startIntake", intake::spin);
 
-        });
-
-        session.registerCallback("startIntake", () -> {
-
-        });
-
-        session.registerCallback("stopIntake", () -> {
-
-        });
+        session.registerCallback("stopIntake", intake::stop);
 
         session.registerCallback("extendSlides", () -> {
-            slides.runToPosition(Slides.MAX_POSITION);
+            slides.runToPosition(Slides.MID_POSITION);
         });
 
         session.registerCallback("raiseCarriage", () -> {
