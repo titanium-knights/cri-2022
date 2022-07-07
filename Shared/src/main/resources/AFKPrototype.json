@@ -7,10 +7,11 @@
   },
   "steps": [
     {
-      "type": "lineConstant",
+      "type": "lineLinear",
       "pos": {
-        "x": -15,
-        "y": -48
+        "x": -13,
+        "y": -51,
+        "heading": 265
       }
     },
     {
@@ -51,7 +52,7 @@
     },
     {
       "type": "wait",
-      "seconds": 2
+      "seconds": 0.2
     },
     {
       "type": "marker",
@@ -60,7 +61,7 @@
     {
       "type": "lineConstant",
       "pos": {
-        "x": -38,
+        "x": -36,
         "y": -63
       }
     },

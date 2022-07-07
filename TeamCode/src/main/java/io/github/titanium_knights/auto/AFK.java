@@ -10,9 +10,16 @@ import io.github.titanium_knights.util.*;
 @Autonomous(name = "AFK (Prototype)")
 public class AFK extends LinearOpMode {
     public static String PATH = JSONParsingUtils.stringFromResource("/AFKPrototype.json");
+    public static int ARM_END_POSITION = -50;
+    public static int LEVEL = 0;
+    public static int SLIDE_DUMP_POSITION_HIGH = 1594;
+    public static int SLIDE_DUMP_POSITION_MID = 1230;
+    public static int SLIDE_DUMP_POSITION_LOW = 1060;
 
     @Override
     public void runOpMode() throws InterruptedException {
+        int LEVEL = AFK.LEVEL;
+
         OdometryRetraction odometryRetraction = new OdometryRetraction(hardwareMap);
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         TrajectorySession session = TrajectorySession.buildFromJSON(drive, PATH);
@@ -25,7 +32,13 @@ public class AFK extends LinearOpMode {
         carriage.setTrapdoorPos(Carriage.TRAPDOOR_IDLE_POS);
 
         session.registerCallback("extendSlides", () -> {
-            slides.runToPosition(Slides.MAX_POSITION);
+            if (LEVEL == 0) {
+                slides.runToPosition(SLIDE_DUMP_POSITION_LOW);
+            } else if (LEVEL == 1) {
+                slides.runToPosition(SLIDE_DUMP_POSITION_MID);
+            } else {
+                slides.runToPosition(SLIDE_DUMP_POSITION_HIGH);
+            }
         });
 
         session.registerCallback("raiseCarriage", () -> {
@@ -47,7 +60,7 @@ public class AFK extends LinearOpMode {
 
         session.registerCallback("openRamp", () -> {
             carriage.setRampPos(Carriage.RAMP_OPEN);
-            carriage.setArmPosition(0);
+            carriage.setArmPosition(ARM_END_POSITION);
         });
 
         waitForStart();
