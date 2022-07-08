@@ -6,11 +6,15 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import io.github.titanium_knights.roadrunner.drive.SampleMecanumDrive;
 import io.github.titanium_knights.util.*;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Config
 public abstract class FarWarehouseCycle extends LinearOpMode {
     public static String RED_PATH = JSONParsingUtils.stringFromResource("/FarWarehouseRed.json");
     public static String BLUE_PATH = JSONParsingUtils.stringFromResource("/FarWarehouseBlue.json");
-    public static int SLIDE_DUMP_POS = 800;
+    public static int SLIDE_DUMP_POSITION_HIGH = 1594;
+    public static int SLIDE_DUMP_POSITION_MID = 1240;
+    public static int SLIDE_DUMP_POSITION_LOW = 1060;
 
     abstract boolean isRed();
 
@@ -23,6 +27,8 @@ public abstract class FarWarehouseCycle extends LinearOpMode {
         Carriage carriage = new Carriage(hardwareMap);
         TubeIntake intake = new TubeIntake(hardwareMap);
         Carousel carousel = new Carousel(hardwareMap);
+        CapstoneVision vision = new CapstoneVision(hardwareMap, telemetry);
+        AtomicInteger level = new AtomicInteger(2);
         CapstoneMechanism capstone = new CapstoneMechanism(hardwareMap);
 
         session.registerCallback("startDuck", carousel::spin);
@@ -45,7 +51,13 @@ public abstract class FarWarehouseCycle extends LinearOpMode {
 
         session.registerCallback("extendSlides", () -> {
             carriage.setArmPosition(Carriage.ARM_SAFE_POSITION);
-            slides.runToPosition(SLIDE_DUMP_POS);
+            if (level.get() == 0) {
+                slides.runToPosition(SLIDE_DUMP_POSITION_LOW);
+            } else if (level.get() == 1) {
+                slides.runToPosition(SLIDE_DUMP_POSITION_MID);
+            } else {
+                slides.runToPosition(SLIDE_DUMP_POSITION_HIGH);
+            }
         });
 
         session.registerCallback("raiseCarriage", () -> {
