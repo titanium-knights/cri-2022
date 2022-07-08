@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../auton-schema.json",
+  "start": {
+    "x": -36,
+    "y": -66,
+    "heading": 90
+  },
+  "steps": [
+    {
+      "type": "setTangent",
+      "tangent": 90
+    },
+    {
+      "type": "splineConstant",
+      "pos": {
+        "x": -60,
+        "y": -24
+      },
+      "tangent": 90
+    }
+  ]
+}
