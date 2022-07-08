@@ -3,7 +3,7 @@ package io.github.titanium_knights.auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name = "Park (Strafe Right)")
-public class SimpleStrafeRight extends SimpleStrafe {
+public class FarParkRed extends FarPark {
     @Override
     Direction getDirection() {
         return Direction.RIGHT;

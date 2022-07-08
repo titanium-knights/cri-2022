@@ -6,7 +6,7 @@ import io.github.titanium_knights.util.CapstoneMechanism;
 import io.github.titanium_knights.util.MecanumDrive;
 
 @Config
-public abstract class SimpleStrafe extends LinearOpMode {
+public abstract class FarPark extends LinearOpMode {
     public static long DELAY_TIME = 27000;
     public static double MOVE_POWER = 1;
     public static long MOVE_TIME = 2000;
@@ -29,9 +29,11 @@ public abstract class SimpleStrafe extends LinearOpMode {
         sleep(DELAY_TIME);
 
         if (getDirection() == Direction.LEFT) {
-            drive.strafeLeftWithPower(MOVE_POWER);
+            drive.move(-0.1,1,0 );
+            drive.driveForwardsWithPower(MOVE_POWER);
         } else {
-            drive.strafeRightWithPower(MOVE_POWER);
+            drive.move(0.1,1,0 );
+            drive.driveForwardsWithPower(MOVE_POWER);
         }
         sleep(MOVE_TIME);
         drive.stop();
