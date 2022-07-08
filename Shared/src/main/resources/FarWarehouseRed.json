@@ -1,0 +1,195 @@
+{
+  "$schema": "../../../../auton-schema.json",
+  "start": {
+    "x": 12,
+    "y": -63,
+    "heading": 270
+  },
+  "steps": [
+    {
+      "type": "lineLinear",
+      "pos": {
+        "x": -13,
+        "y": -51,
+        "heading": 265
+      }
+    },
+    {
+      "type": "marker",
+      "callback": "extendSlides"
+    },
+    {
+      "type": "wait",
+      "seconds": 2
+    },
+    {
+      "type": "marker",
+      "callback": "raiseCarriage"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "openTrapdoor"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "lowerCarriage"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "retractSlides"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2
+    },
+    {
+      "type": "marker",
+      "callback": "openRamp"
+    },
+    {
+      "type": "lineLinear",
+      "pos": {
+        "x": 5,
+        "y": -64,
+        "heading": -2.5
+      }
+    },
+    {
+      "type": "lineConstant",
+      "pos": {
+        "x": 5,
+        "y": -68
+      }
+    },
+    {
+      "type": "lineLinear",
+      "pos": {
+        "x": 50,
+        "y": -72,
+        "heading": -2.5
+      }
+    },
+    {
+      "type": "marker",
+      "callback": "reverseIntake"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5
+    },
+    {
+      "type": "marker",
+      "callback": "startIntake"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.5
+    },
+    {
+      "type": "marker",
+      "callback": "stopIntake"
+    },
+    {
+      "type": "lineLinear",
+      "pos": {
+        "x": 5,
+        "y": -68,
+        "heading": -2.5
+      }
+    },
+    {
+      "type": "lineConstant",
+      "pos": {
+        "x": 5,
+        "y": -64
+      }
+    },
+    {
+      "type": "lineLinear",
+      "pos": {
+        "x": -13,
+        "y": -51,
+        "heading": 265
+      }
+    },
+    {
+      "type": "marker",
+      "callback": "extendSlides"
+    },
+    {
+      "type": "wait",
+      "seconds": 2
+    },
+    {
+      "type": "marker",
+      "callback": "raiseCarriage"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "openTrapdoor"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "lowerCarriage"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "retractSlides"
+    },
+    {
+      "type": "wait",
+      "seconds": 0.2
+    },
+    {
+      "type": "marker",
+      "callback": "openRamp"
+    },
+    {
+      "type": "lineLinear",
+      "pos": {
+        "x": 5,
+        "y": -64,
+        "heading": -2.5
+      }
+    },
+    {
+      "type": "lineConstant",
+      "pos": {
+        "x": 5,
+        "y": -68
+      }
+    },
+    {
+      "type": "lineLinear",
+      "pos": {
+        "x": 50,
+        "y": -72,
+        "heading": -2.5
+      }
+    }
+  ]
+}
