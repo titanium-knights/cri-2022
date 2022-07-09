@@ -25,7 +25,7 @@ public abstract class NearWarehouseCycle extends LinearOpMode {
         Carousel carousel = new Carousel(hardwareMap);
         CapstoneMechanism capstone = new CapstoneMechanism(hardwareMap);
 
-        session.registerCallback("startDuck", carousel::spin);
+        session.registerCallback("startDuck", carousel::spinReverse);
 
         session.registerCallback("stopDuck", carousel::stop);
 
@@ -71,13 +71,13 @@ public abstract class NearWarehouseCycle extends LinearOpMode {
         });
 
         carriage.setRampPos(Carriage.RAMP_CLOSE);
-        carriage.setArmPosition(Carriage.ARM_SAFE_POSITION);
 
         odometryRetraction.extend();
 
         waitForStart();
         capstone.setPosition(CapstoneMechanism.autoStart);
-        sleep(1000);
+        sleep(500);
+        carriage.setArmPosition(Carriage.ARM_SAFE_POSITION);
         session.run(this);
     }
 }

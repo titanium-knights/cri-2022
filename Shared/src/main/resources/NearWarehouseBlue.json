@@ -9,9 +9,9 @@
     {
       "type": "lineLinear",
       "pos": {
-        "x": -60,
-        "y": 60,
-        "heading": 210
+        "x": -57,
+        "y": 64,
+        "heading": 215
       }
     },
     {
@@ -157,20 +157,14 @@
       "callback": "lowerCarriage"
     },
     {
-      "type": "wait",
-      "seconds": 1
+      "type": "marker",
+      "callback": "retractSlides",
+      "timeOffset": 1
     },
     {
       "type": "marker",
-      "callback": "retractSlides"
-    },
-    {
-      "type": "wait",
-      "seconds": 0.25
-    },
-    {
-      "type": "marker",
-      "callback": "openRamp"
+      "callback": "openRamp",
+      "timeOffset": 1.25
     },
     {
       "type": "splineTangent",
