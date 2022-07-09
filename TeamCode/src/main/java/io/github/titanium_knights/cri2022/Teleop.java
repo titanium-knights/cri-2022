@@ -37,9 +37,10 @@ public class Teleop extends OpMode {
     Claw claw;
     ButtonToggler btnBackG1; //used for capstone claw
     ButtonToggler btnRtBumperG2;
+    ButtonToggler btnBackG2; // used for manual ramp controls
     ButtonToggler btnB; //used for carriage trapdoor (G1)
     ButtonToggler btnX; //used for slowmode toggle (G1)
-    SlideState slidesState;
+    SlideState slidesState = SlideState.LOW_UNSAFE;
 
     public static double DRIVE_SPEED = 0.8;
     public static double DRIVE_SPEED_SLOW = 0.5;
@@ -58,11 +59,20 @@ public class Teleop extends OpMode {
 
         btnBackG1 = new ButtonToggler();
         btnRtBumperG2 = new ButtonToggler();
+        btnBackG2 = new ButtonToggler();
+        btnBackG2.setMode(true);
         btnB = new ButtonToggler();
         btnX = new ButtonToggler();
 
         odometry.retract();
-        slidesState = SlideState.LOW_UNSAFE;
+        transitionState(SlideState.LOW_UNSAFE);
+    }
+
+    void transitionState(SlideState slidesState) {
+        if (slidesState.shouldOpenRamp() != this.slidesState.shouldOpenRamp()) {
+            btnBackG2.setMode(slidesState.shouldOpenRamp());
+        }
+        this.slidesState = slidesState;
     }
 
     @Override
@@ -73,10 +83,12 @@ public class Teleop extends OpMode {
         //driving + slow mode
         if (btnX.getMode()) {
             drive.teleOpRobotCentric(gamepad1, DRIVE_SPEED_SLOW);
+            telemetry.addData("Mode", "SLOW");
         }
 
         else {
             drive.teleOpRobotCentric(gamepad1, DRIVE_SPEED);
+            telemetry.addData("Mode", "FAST");
         }
 
         //intake
@@ -102,11 +114,12 @@ public class Teleop extends OpMode {
         }
 
         //capstone
+        double capPower = btnX.getMode() ? (CapstoneMechanism.power / 2) : CapstoneMechanism.power;
         if(gamepad1.dpad_up || gamepad2.dpad_up) {
-            capstone.setPosition(CapstoneMechanism.idle);
+            capstone.setManualPower(capPower);
         }
         else if(gamepad1.dpad_down || gamepad2.dpad_down) {
-            capstone.setPosition(CapstoneMechanism.pickup);
+            capstone.setManualPower(-capPower);
         }
         else{
             capstone.setManualPower(0);
@@ -126,28 +139,34 @@ public class Teleop extends OpMode {
             claw.release();
         }
 
+        if (btnBackG2.getMode()) {
+            carriage.setRampPos(Carriage.RAMP_OPEN);
+            telemetry.addData("Ramp Pos", "OPEN");
+        } else {
+            carriage.setRampPos(Carriage.RAMP_CLOSE);
+            telemetry.addData("Ramp Pos", "CLOSED");
+        }
+
         telemetry.addData("carriage val", carriage.getArmPosition());
         telemetry.addData("slides val", slides.getCurrentPosition());
 
         //slides -- using gamepad 2
         //slides --presets
         if (gamepad2.y) {
-            slidesState = SlideState.HIGH_SAFING;
+            transitionState(SlideState.HIGH_SAFING);
         }
 
         else if (gamepad2.x) {
-            slidesState = SlideState.MID_SAFING;
+            transitionState(SlideState.MID_SAFING);
         }
 
         else if (gamepad2.a) {
-            slidesState = SlideState.LOW_RESETTING_CARRIAGE;
+            transitionState(SlideState.LOW_RESETTING_CARRIAGE);
         }
 
         if (gamepad2.left_trigger > 0.1 || gamepad2.right_trigger > 0.1) {
-            if (slidesState != SlideState.MANUAL) slidesState = SlideState.MANUAL_SAFING;
+            if (slidesState != SlideState.MANUAL) transitionState(SlideState.MANUAL_SAFING);
         }
-
-        carriage.setRampPos(slidesState.shouldOpenRamp() ? Carriage.RAMP_OPEN : Carriage.RAMP_CLOSE);
 
         if (slidesState == SlideState.HIGH) {
             slides.runToPosition(Slides.MAX_POSITION);
@@ -156,7 +175,7 @@ public class Teleop extends OpMode {
         } else if (slidesState == SlideState.LOW_RESETTING_CARRIAGE) {
             slides.setPower(0);
             if (Math.abs(carriage.getArmPosition() - Carriage.ARM_SAFE_POSITION) < Carriage.ARM_POSITION_BUFFER) {
-                slidesState = SlideState.LOW_MOVING;
+                transitionState(SlideState.LOW_MOVING);
             } else {
                 carriage.setArmPosition(Carriage.ARM_SAFE_POSITION);
             }
@@ -164,7 +183,7 @@ public class Teleop extends OpMode {
             slides.runToPosition(Slides.MIN_POSITION);
             btnB.setMode(false);
             if (Math.abs(slides.getCurrentPosition() - Slides.CARRIAGE_MOVE_DOWN_POS) < Slides.POSITION_BUFFER_LOW) {
-                slidesState = SlideState.LOW_UNSAFE;
+                transitionState(SlideState.LOW_UNSAFE);
                 carriage.setArmPosition(Carriage.ARM_INTAKE_POSITION);
             }
         } else if (slidesState == SlideState.MANUAL) {
@@ -183,11 +202,11 @@ public class Teleop extends OpMode {
                 carriage.setArmPosition(Carriage.ARM_SAFE_POSITION);
             } else {
                 if (slidesState == SlideState.HIGH_SAFING) {
-                    slidesState = SlideState.HIGH;
+                    transitionState(SlideState.HIGH);
                 } else if (slidesState == SlideState.MID_SAFING) {
-                    slidesState = SlideState.MID;
+                    transitionState(SlideState.MID);
                 } else if (slidesState == SlideState.MANUAL_SAFING) {
-                    slidesState = SlideState.MANUAL;
+                    transitionState(SlideState.MANUAL);
                 } else {
                     throw new IllegalStateException("Unknown safing state!");
                 }
