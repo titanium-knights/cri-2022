@@ -159,12 +159,12 @@
     {
       "type": "marker",
       "callback": "retractSlides",
-      "timeOffset": 2
+      "timeOffset": 1.5
     },
     {
       "type": "marker",
       "callback": "openRamp",
-      "timeOffset": 2.25
+      "timeOffset": 1.75
     },
     {
       "type": "splineTangent",
