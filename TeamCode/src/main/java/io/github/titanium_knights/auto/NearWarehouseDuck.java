@@ -33,9 +33,11 @@ public abstract class NearWarehouseDuck extends LinearOpMode {
 
 
 
+        odometryRetraction.extend();
+
         waitForStart();
         capstone.setPosition(CapstoneMechanism.autoStart);
         sleep(500);
-
+        session.run(this);
     }
 }
