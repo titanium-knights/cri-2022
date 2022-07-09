@@ -132,6 +132,9 @@ public class Teleop extends OpMode {
         btnRtBumperG2.ifRelease(gamepad2.right_bumper);
         btnRtBumperG2.update(gamepad2.right_bumper);
 
+        btnBackG2.ifRelease(gamepad2.back);
+        btnBackG2.update(gamepad2.back);
+
         if(btnBackG1.getMode() || btnRtBumperG2.getMode()) {
             claw.grab();
         }
