@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 @Config public class CapstoneMechanism{
     DcMotor motor;
     public static double power = 0.8;
-    public static int idle = 0; //idle position
+    public static int idle = 200; //idle position
     public static int pickup = -1392; //picking up capstone from floor
     public static int capping = -195; //"dumping" capstone
     public static int autoStart = -1100;
