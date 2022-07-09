@@ -124,7 +124,7 @@
       "type": "splineTangent",
       "pos": {
         "x": -33,
-        "y": 22
+        "y": 23
       },
       "tangent": 270
     },
@@ -169,7 +169,7 @@
     {
       "type": "splineTangent",
       "pos": {
-        "x": -60,
+        "x": -66,
         "y": 24
       },
       "tangent": 270

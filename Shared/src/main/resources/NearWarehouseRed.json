@@ -9,9 +9,9 @@
     {
       "type": "lineLinear",
       "pos": {
-        "x": -57,
-        "y": -64,
-        "heading": 150
+        "x": -55.5,
+        "y": -63,
+        "heading": 160
       }
     },
     {
@@ -35,7 +35,7 @@
       "type": "splineLinear",
       "pos": {
         "x": -30,
-        "y": -22,
+        "y": -23,
         "heading": 270
       },
       "tangent": 90
@@ -169,7 +169,7 @@
     {
       "type": "splineTangent",
       "pos": {
-        "x": -60,
+        "x": -66,
         "y": -24
       },
       "tangent": 90
