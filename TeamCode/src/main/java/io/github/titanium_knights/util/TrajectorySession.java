@@ -191,9 +191,19 @@ public class TrajectorySession {
 
                 if (type.equals("marker")) {
                     String name = step.getString("callback");
-                    builder = builder.addTemporalMarker(() -> {
-                        session.dispatchCallback(name);
-                    });
+                    if (step.has("displacementOffset")) {
+                        builder = builder.UNSTABLE_addDisplacementMarkerOffset(step.getDouble("displacementOffset"), () -> {
+                            session.dispatchCallback(name);
+                        });
+                    } else if (step.has("timeOffset")) {
+                        builder = builder.UNSTABLE_addTemporalMarkerOffset(step.getDouble("timeOffset"), () -> {
+                            session.dispatchCallback(name);
+                        });
+                    } else {
+                        builder = builder.addTemporalMarker(() -> {
+                            session.dispatchCallback(name);
+                        });
+                    }
                     continue;
                 }
 

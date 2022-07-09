@@ -1,0 +1,56 @@
+{
+  "$schema": "../../../../auton-schema.json",
+  "start": {
+    "x": -36,
+    "y": -66,
+    "heading": 180
+  },
+  "steps": [
+    {
+      "type": "marker",
+      "callback": "extendSlides"
+    },
+    {
+      "type": "wait",
+      "seconds": 2
+    },
+    {
+      "type": "marker",
+      "callback": "raiseCarriage"
+    },
+    {
+      "type": "wait",
+      "seconds": 1
+    },
+    {
+      "type": "marker",
+      "callback": "openTrapdoor"
+    },
+    {
+      "type": "wait",
+      "seconds": 1.5
+    },
+    {
+      "type": "marker",
+      "callback": "lowerCarriage"
+    },
+    {
+      "type": "marker",
+      "callback": "retractSlides",
+      "timeOffset": 2
+    },
+    {
+      "type": "marker",
+      "callback": "openRamp",
+      "timeOffset": 2.25
+    },
+    {
+      "type": "wait",
+      "seconds": 10
+    },
+    {
+      "type": "marker",
+      "callback": "openRamp"
+    }
+  ]
+}

@@ -7,41 +7,21 @@ import io.github.titanium_knights.roadrunner.drive.SampleMecanumDrive;
 import io.github.titanium_knights.util.*;
 
 @Config
-public abstract class NearWarehouseCycle extends LinearOpMode {
-    public static String RED_PATH = JSONParsingUtils.stringFromResource("/NearWarehouseRed.json");
-    public static String BLUE_PATH = JSONParsingUtils.stringFromResource("/NearWarehouseBlue.json");
+@Autonomous(name = "TEST ONLY DO NOT USE IN A REAL MATCH")
+public class NearWarehouseTest extends LinearOpMode {
+    public static String PATH = JSONParsingUtils.stringFromResource("/NearWarehouseTest.json");
     public static int SLIDE_DUMP_POS = 800;
-
-    abstract boolean isRed();
 
     @Override
     public void runOpMode() throws InterruptedException {
         OdometryRetraction odometryRetraction = new OdometryRetraction(hardwareMap);
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
-        TrajectorySession session = TrajectorySession.buildFromJSON(drive, isRed() ? RED_PATH : BLUE_PATH);
+        TrajectorySession session = TrajectorySession.buildFromJSON(drive, PATH);
         Slides slides = new Slides(hardwareMap);
         Carriage carriage = new Carriage(hardwareMap);
         TubeIntake intake = new TubeIntake(hardwareMap);
         Carousel carousel = new Carousel(hardwareMap);
         CapstoneMechanism capstone = new CapstoneMechanism(hardwareMap);
-
-        session.registerCallback("startDuck", carousel::spinReverse);
-
-        session.registerCallback("stopDuck", carousel::stop);
-
-        session.registerCallback("startIntake", () -> {
-            intake.setPower(-1.0);
-            carriage.setRampPos(Carriage.RAMP_OPEN);
-        });
-
-        session.registerCallback("reverseIntake", () -> {
-            intake.setPower(0.75);
-        });
-
-        session.registerCallback("stopIntake", () -> {
-            intake.stop();
-            carriage.setRampPos(Carriage.RAMP_CLOSE);
-        });
 
         session.registerCallback("extendSlides", () -> {
             carriage.setArmPosition(Carriage.ARM_SAFE_POSITION);
@@ -70,8 +50,9 @@ public abstract class NearWarehouseCycle extends LinearOpMode {
             carriage.setArmPosition(AFK.ARM_END_POSITION);
         });
 
-        odometryRetraction.extend();
         carriage.setRampPos(Carriage.RAMP_CLOSE);
+
+        odometryRetraction.extend();
 
         waitForStart();
         capstone.setPosition(CapstoneMechanism.autoStart);
