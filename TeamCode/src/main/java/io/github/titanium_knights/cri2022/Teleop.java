@@ -190,7 +190,7 @@ public class Teleop extends OpMode {
             if ((gamepad2.right_trigger > 0.1) && (slides.getCurrentPosition() < Slides.MAX_POSITION)) {
                 slides.setPower(gamepad2.right_trigger);
             }
-            else if ((gamepad2.left_trigger > 0.1) && (slides.getCurrentPosition() > Slides.MIN_POSITION)) {
+            else if (gamepad2.left_trigger > 0.1) {
                 slides.setPower(-gamepad2.left_trigger);
             }
             else{

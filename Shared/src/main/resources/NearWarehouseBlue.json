@@ -50,7 +50,7 @@
     },
     {
       "type": "wait",
-      "seconds": 2
+      "seconds": 1
     },
     {
       "type": "marker",
@@ -81,12 +81,9 @@
       "callback": "retractSlides"
     },
     {
-      "type": "wait",
-      "seconds": 0.25
-    },
-    {
       "type": "marker",
-      "callback": "openRamp"
+      "callback": "openRamp",
+      "timeOffset": 0.25
     },
     {
       "type": "splineTangent",
@@ -134,7 +131,7 @@
     },
     {
       "type": "wait",
-      "seconds": 2
+      "seconds": 1
     },
     {
       "type": "marker",

@@ -50,7 +50,7 @@
     },
     {
       "type": "wait",
-      "seconds": 2
+      "seconds": 1
     },
     {
       "type": "marker",
@@ -81,12 +81,9 @@
       "callback": "retractSlides"
     },
     {
-      "type": "wait",
-      "seconds": 0.25
-    },
-    {
       "type": "marker",
-      "callback": "openRamp"
+      "callback": "openRamp",
+      "timeOffset": 0.25
     },
     {
       "type": "splineTangent",
@@ -124,7 +121,7 @@
       "type": "splineTangent",
       "pos": {
         "x": -33,
-        "y": -22
+        "y": -20
       },
       "tangent": 90
     },
@@ -134,7 +131,7 @@
     },
     {
       "type": "wait",
-      "seconds": 2
+      "seconds": 1
     },
     {
       "type": "marker",
@@ -159,12 +156,12 @@
     {
       "type": "marker",
       "callback": "retractSlides",
-      "timeOffset": 1.5
+      "timeOffset": 1
     },
     {
       "type": "marker",
       "callback": "openRamp",
-      "timeOffset": 1.75
+      "timeOffset": 1.25
     },
     {
       "type": "splineTangent",
