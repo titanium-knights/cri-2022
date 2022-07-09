@@ -30,7 +30,7 @@ public abstract class NearWarehouseCycle extends LinearOpMode {
         session.registerCallback("stopDuck", carousel::stop);
 
         session.registerCallback("startIntake", () -> {
-            intake.setPower(-0.75);
+            intake.setPower(-1.0);
             carriage.setRampPos(Carriage.RAMP_OPEN);
         });
 

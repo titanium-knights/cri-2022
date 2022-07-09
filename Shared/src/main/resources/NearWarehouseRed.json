@@ -92,7 +92,7 @@
       "type": "splineTangent",
       "pos": {
         "x": -64,
-        "y": -15
+        "y": -13.5
       },
       "tangent": 90
     },
@@ -159,12 +159,12 @@
     {
       "type": "marker",
       "callback": "retractSlides",
-      "timeOffset": 1
+      "timeOffset": 2
     },
     {
       "type": "marker",
       "callback": "openRamp",
-      "timeOffset": 1.25
+      "timeOffset": 2.25
     },
     {
       "type": "splineTangent",

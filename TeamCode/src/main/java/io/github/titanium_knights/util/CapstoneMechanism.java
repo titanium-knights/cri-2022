@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
     public static int idle = 0; //idle position
     public static int pickup = -1392; //picking up capstone from floor
     public static int capping = -195; //"dumping" capstone
-    public static int autoStart = -900;
+    public static int autoStart = -1100;
 
     public CapstoneMechanism(HardwareMap hardwareMap, boolean resetEncoders){
         motor = hardwareMap.dcMotor.get("capstone");
