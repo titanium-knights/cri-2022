@@ -7,8 +7,8 @@ import org.jetbrains.annotations.NotNull;
 @Config
 public class Claw {
     public Servo claw;
-    public static double releasePos = 1.0;
-    public static double grabPos = 0.67;
+    public static double releasePos = 0.9;
+    public static double grabPos = 0.6;
 //    public static double armMultiplier = -0.5;
 
     public Claw(HardwareMap hardwareMap) {
