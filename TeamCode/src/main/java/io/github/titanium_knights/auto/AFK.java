@@ -32,7 +32,6 @@ abstract class AFK extends LinearOpMode {
         CapstoneMechanism capstone = new CapstoneMechanism(hardwareMap);
         odometryRetraction.extend();
 
-        carriage.setArmPosition(Carriage.ARM_SAFE_POSITION);
         carriage.setRampPos(Carriage.RAMP_CLOSE);
         carriage.setTrapdoorPos(Carriage.TRAPDOOR_IDLE_POS);
 
@@ -71,7 +70,8 @@ abstract class AFK extends LinearOpMode {
         waitForStart();
         LEVEL.set(vision.getPosition());
         capstone.setPosition(CapstoneMechanism.autoStart);
-        sleep(1000);
+        sleep(500);
+        carriage.setArmPosition(Carriage.ARM_SAFE_POSITION);
         session.run(this);
     }
 }
